@@ -4,7 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import { collection, getDocs } from "firebase/firestore";
+// import { collection, getDocs } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,15 +26,13 @@ const app = firebase.initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-const firebaseAuth = firebaseApp.auth();
-const firebaseFirestore = firebaseApp.firestore();
+const auth = firebaseApp.auth();
+const firestore = firebaseApp.firestore();
 
 const firestoreDB = {
-  posts: firebaseFirestore.collection("users"),
+  posts: firestore.collection("users"),
   getCurrentTimestamp: firebase.firestore.FieldValue.serverTimestamp,
 };
 
-const db = firebase.firestore();
 
-
-export { firebaseAuth, firestoreDB, db};
+export { firestore, auth, firebase};
