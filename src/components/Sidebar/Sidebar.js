@@ -10,7 +10,7 @@ import { auth } from '../../firebase'
 
 function Sidebar(props) {
   return (
-    <div className="fixed top-0 left-0 h-screen v-screen w-20 m-0 flex flex-col bg-white text-primary shadow-lg">
+    <div className="fixed top-0 right-0 h-5/6 w-20 m-0 flex flex-col bg-white text-primary shadow-lg">
       
       <SideBarIcon
         icon={<SiGooglechat size={28} />}
@@ -30,7 +30,7 @@ function Sidebar(props) {
       onClick={''}>
       </SideBarIcon>
  
-      <div className="mt-auto mb-5">
+      <div className="mt-auto">
       <SideBarIcon
         icon={<GoSignOut size={28} />}
         text={"Sign Out"}

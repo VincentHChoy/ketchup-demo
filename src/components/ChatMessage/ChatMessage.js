@@ -1,5 +1,6 @@
 import { auth} from '../../firebase'
 import moment from "moment";
+import "./ChatMessage.css";
 
 
 function ChatMessage(props) {
@@ -12,15 +13,15 @@ function ChatMessage(props) {
   const a = moment(time).fromNow();
   return (
     <>
-      <span style={{ color: "white" }}>{a}</span>
+      <span class='time'>{a}</span>
       <div className={`message ${messageClass}`}>
-        <img
+        <img class='rounded-full w-10 ' 
           src={
             photoURL ||
             "https://4.bp.blogspot.com/-NiUcogaBYrk/UioQgTmkGuI/AAAAAAAAClg/YOdyn5RB4W4/s1600/minion_icon_image_picfishblogspotcom+%25287%2529.png"
           }
         />
-        <p>{text}</p>
+        <p> {text}</p>
       </div>
     </>
   );
