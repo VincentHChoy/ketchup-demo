@@ -3,6 +3,8 @@ import { auth, firebase, firestore } from '../../firebase'
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import SignOut from '../SignOut/SignOut'
 import ChatMessage from '../ChatMessage/ChatMessage'
+import './ChatRoom.css';
+
 
 
 function ChatRoom() {
@@ -16,8 +18,6 @@ function ChatRoom() {
   const sendMessage = async (e) => {
     e.preventDefault();
     const { uid, photoURL } = auth.currentUser;
-
-    //create new document in firestore
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -30,20 +30,29 @@ function ChatRoom() {
 
   return (
     <>
-      {SignOut()}
-      <main>
-        {messages &&
+      {/* {SignOut()} */}
+      <main class="chat">
+
+        <div > 
+  
+          {messages &&
           messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
         <div ref={dummy}></div>
+        </div>
+       
       </main>
       <form onSubmit={sendMessage}>
-        <input
-          value={formValue}
-          onChange={(event) => setFormValue(event.target.value)}
-        />
-        <button type="submit">Submit</button>
+        <div class='message-input'>
+          <input    
+        class='input-message'
+        placeholder="ketchup message..."
+        value={formValue}
+        onChange={(event) => setFormValue(event.target.value)}/>   
+         <button type="submit" class="submit-button">Submit</button>    
+        </div>
+       
       </form>
     </>
   );
 }
-export default ChatRoom
+export default ChatRoom;

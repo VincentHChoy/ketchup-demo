@@ -15,7 +15,7 @@ const SignIn = () => {
         <img src="logo.svg" alt='logo' class='logo animate-none' />
 
       </div>
-  
+    
 
 
       <button class="signin-button" onClick={signInWithGoogle}>Sign in with Google</button>
