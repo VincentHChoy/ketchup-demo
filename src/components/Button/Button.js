@@ -1,8 +1,9 @@
 import './Button.css'
 
-function Button(props) {
+function Button({type = 'tooltip', handleClick , message }) {
+
   return (
-    <button class="signin-button" onClick={props.function}>{props.message}</button>
+    <button type={type} class="signin-button" onClick={handleClick}>{message}</button>
   )
 }
 

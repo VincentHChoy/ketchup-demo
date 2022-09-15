@@ -4,6 +4,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import SignOut from '../SignOut/SignOut'
 import ChatMessage from '../ChatMessage/ChatMessage'
 import Sidebar from "../Sidebar/Sidebar";
+import Button from "../Button/Button";
 
 import './ChatRoom.css';
 
@@ -49,8 +50,11 @@ function ChatRoom() {
         class='input-message'
         placeholder="ketchup message..."
         value={formValue}
-        onChange={(event) => setFormValue(event.target.value)}/>   
-         <button type="submit" class="submit-button">Submit</button>    
+        onChange={(event) => setFormValue(event.target.value)}/>
+          <Button 
+          message={'Submit'}
+          type="submit"
+          />            
         </div>
        
       </form>

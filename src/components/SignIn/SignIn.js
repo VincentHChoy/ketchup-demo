@@ -17,7 +17,7 @@ const SignIn = () => {
 
       </div>
 
-      <Button message={"Sign in with Google"} function={signInWithGoogle} />
+      <Button message={"Sign in with Google"} handleClick={signInWithGoogle} />
       
     </section>
 

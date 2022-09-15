@@ -14,20 +14,19 @@ function Sidebar(props) {
       
       <SideBarIcon
         icon={<SiGooglechat size={28} />}
-        text={"Chat"}
-        onClick={''}>
+        text={"Chat"}>
       </SideBarIcon>
 
       <SideBarIcon 
       icon={<SiGooglesheets size={28}/>} 
       text={"Google Sheets"}
-      onClick={''}>
+      >
       </SideBarIcon>
 
       <SideBarIcon 
       icon={<SiReadthedocs size={28}/>}
       text={"Google Docs"}
-      onClick={''}>
+      >
       </SideBarIcon>
  
       <div className="mt-auto">
