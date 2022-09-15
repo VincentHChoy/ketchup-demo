@@ -3,6 +3,8 @@ import { auth, firebase, firestore } from '../../firebase'
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import SignOut from '../SignOut/SignOut'
 import ChatMessage from '../ChatMessage/ChatMessage'
+import Sidebar from "../Sidebar/Sidebar";
+
 import './ChatRoom.css';
 
 
@@ -32,8 +34,8 @@ function ChatRoom() {
     <>
       {/* {SignOut()} */}
       <main class="chat">
-
-        <div > 
+        <Sidebar/>
+        <div> 
   
           {messages &&
           messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
