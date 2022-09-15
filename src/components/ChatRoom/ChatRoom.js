@@ -3,6 +3,7 @@ import { auth, firebase, firestore } from '../../firebase'
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import SignOut from '../SignOut/SignOut'
 import ChatMessage from '../ChatMessage/ChatMessage'
+import Sidebar from "../Sidebar/Sidebar";
 
 
 function ChatRoom() {
@@ -30,6 +31,7 @@ function ChatRoom() {
 
   return (
     <>
+    <Sidebar/>
       {SignOut()}
       <main>
         {messages &&

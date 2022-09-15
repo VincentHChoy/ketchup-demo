@@ -6,7 +6,11 @@ module.exports = {
   darkMode: 'class', // class, 'media' or boolean
   theme: {
     extend: {
+      boxShadow:{
+        '3xl': '4px 4px 0 0 #422800',
+      },
       colors: {
+        primary:"#422800",
         gray: {
           900: '#202225',
           800: '#2f3136',
@@ -16,6 +20,7 @@ module.exports = {
           300: '#e3e5e8',
           200: '#ebedef',
           100: '#f2f3f5',
+          
         },
       },
       spacing: {

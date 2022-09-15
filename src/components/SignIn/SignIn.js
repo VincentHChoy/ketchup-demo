@@ -1,5 +1,6 @@
 import './SignIn.css'
 import { auth, firebase } from '../../firebase'
+import Button from '../Button/Button'
 
 
 const SignIn = () => {
@@ -10,16 +11,14 @@ const SignIn = () => {
   }
 
   return (
-    <section class='grid h-screen place-items-center'>
-      <div class="pb-30">
+    <section className='grid h-screen place-items-center'>
+      <div className="pb-30">
         <img src="logo.svg" alt='logo' class='logo animate-none' />
 
       </div>
-  
 
-
-      <button class="signin-button" onClick={signInWithGoogle}>Sign in with Google</button>
-
+      <Button message={"Sign in with Google"} function={signInWithGoogle} />
+      
     </section>
 
 
