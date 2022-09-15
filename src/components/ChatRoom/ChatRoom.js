@@ -1,14 +1,12 @@
 import React, { useRef, useState } from "react";
-import { auth, firebase, firestore } from '../../firebase'
+import { auth, firebase, firestore } from "../../firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import SignOut from '../SignOut/SignOut'
-import ChatMessage from '../ChatMessage/ChatMessage'
+import SignOut from "../SignOut/SignOut";
+import ChatMessage from "../ChatMessage/ChatMessage";
 import Sidebar from "../Sidebar/Sidebar";
 import Button from "../Button/Button";
 
-import './ChatRoom.css';
-
-
+import "./ChatRoom.css";
 
 function ChatRoom() {
   const dummy = useRef();
@@ -32,33 +30,31 @@ function ChatRoom() {
   };
 
   return (
-    <>
-      {/* {SignOut()} */}
-      <main class="chat">
-        <Sidebar/>
-        <div> 
-  
+    <main className="chatroom">
+      <main className="chat">
+        <Sidebar />
           {messages &&
-          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
-        <div ref={dummy}></div>
-        </div>
-       
+            messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+
+          <div ref={dummy}></div>
+          
+
       </main>
-      <form onSubmit={sendMessage}>
-        <div class='message-input'>
-          <input    
-        class='input-message'
-        placeholder="ketchup message..."
-        value={formValue}
-        onChange={(event) => setFormValue(event.target.value)}/>
-          <Button 
-          message={'Submit'}
-          type="submit"
-          />            
-        </div>
-       
-      </form>
-    </>
+        <form 
+        className="fixed bottom-0 left-20 ml-5 mb-0 text-2xl pb-5 bg-white w-screen" 
+        onSubmit={sendMessage}>
+          <section className="flex content-center justify-center">
+            <input
+              className="input-message"
+              placeholder="ketchup message..."
+              value={formValue}
+              onChange={(event) => setFormValue(event.target.value)}
+            />
+            <Button message={"Submit"} type="submit" />
+          </section>
+        </form>
+
+    </main>
   );
 }
 export default ChatRoom;

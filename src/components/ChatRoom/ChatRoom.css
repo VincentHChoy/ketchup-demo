@@ -1,42 +1,45 @@
-
-
 .chat {
-  padding: 10px;
-  height: 80vh;
-  margin: 0 0 10vh;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
+  padding: 10px;
+  height: 80vh;
+  width: 100%;
+  margin: 0 0 10vh;
+  margin-left: 100px;
+  overflow-y: scroll;
   background-color: white;
 }
+
+
 
 .chat::-webkit-scrollbar {
   width: 0.25rem;
- 
+
 }
 
 .chat::-webkit-scrollbar-track {
-  background:lightblue;
+  background: lightblue;
 }
 
 .chat::-webkit-scrollbar-thumb {
-  background:salmon;
+  background: salmon;
 
 }
 
-form {
+/* form {
   height: 10vh;
-  width:100%;
+  width: 80%;
   position: fixed;
   bottom: 0;
+  left: 80px;
   background-color: white;
   font-size: 1.5rem;
-}
+} */
 
 ul,
 li {
   text-align: left;
-  
+
   list-style: none;
 }
 
@@ -52,6 +55,20 @@ p {
   text-align: center;
 
 }
+
+
+
+
+.chatroom {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  overflow-y: scroll;
+
+}
+
+
+
 
 .message {
   display: flex;
@@ -76,16 +93,16 @@ p {
   color: black;
 }
 
-.message-input{
-  display:flex;
-  margin: 20px 20px;
+.message-input {
+  display: flex;
+  width: auto;
+
 
 }
 
-.input-message{
+.input-message {
   display: flex;
-  justify-content: flex-start;
-  width: 80%;
+  flex-grow: 0.5;
   font-size: 20px;
   border: none;
   background-color: transparent;
@@ -93,5 +110,5 @@ p {
   border-bottom: 2px solid rgb(83, 82, 82);
   margin-bottom: 5px;
   color: rgb(83, 82, 82);
-  font-family:'Source Sans Pro',sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
