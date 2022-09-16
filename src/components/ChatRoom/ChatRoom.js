@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { auth, firebase, firestore } from "../../firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import SignOut from "../SignOut/SignOut";
+
 import ChatMessage from "../ChatMessage/ChatMessage";
 import Sidebar from "../Sidebar/Sidebar";
 import Button from "../Button/Button";

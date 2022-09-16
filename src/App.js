@@ -9,13 +9,15 @@ import {auth } from "./firebase";
 import SignIn from "./components/SignIn/SignIn";
 import ChatRoom from "./components/ChatRoom/ChatRoom";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Home from "./components/Home/Home";
 
 function App() {
   const [user] = useAuthState(auth);
+
   return (
     <div className="App">
       <header></header>
-      <section>{user ? <ChatRoom /> : <SignIn />}</section>
+      <section>{user ? <Home /> : <SignIn />}</section>
     </div>
   );
 }
