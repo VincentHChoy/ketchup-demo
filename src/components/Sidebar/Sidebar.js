@@ -12,6 +12,10 @@ function Sidebar(props) {
   return (
     <div className="fixed top-0 left-0 h-screen w-20 m-0 flex flex-col bg-white text-primary shadow-lg z-20">
       
+      <img src="logo-cropped.jpg" alt='logo' class='my-5 mx-auto w-1/2' /> 
+      
+      
+      
       <SideBarIcon
         icon={<SiGooglechat size={28} />}
         text={"Chat"}>
