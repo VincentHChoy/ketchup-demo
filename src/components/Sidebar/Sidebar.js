@@ -10,27 +10,26 @@ import { auth } from '../../firebase'
 
 function Sidebar(props) {
   return (
-    <div className="fixed top-0 right-0 h-5/6 w-20 m-0 flex flex-col bg-white text-primary shadow-lg">
+    <div className="fixed top-0 left-0 h-screen w-20 m-0 flex flex-col bg-white text-primary shadow-lg z-20">
       
       <SideBarIcon
         icon={<SiGooglechat size={28} />}
-        text={"Chat"}
-        onClick={''}>
+        text={"Chat"}>
       </SideBarIcon>
 
       <SideBarIcon 
       icon={<SiGooglesheets size={28}/>} 
       text={"Google Sheets"}
-      onClick={''}>
+      >
       </SideBarIcon>
 
       <SideBarIcon 
       icon={<SiReadthedocs size={28}/>}
       text={"Google Docs"}
-      onClick={''}>
+      >
       </SideBarIcon>
  
-      <div className="mt-auto">
+      <div className="mt-auto mb-5">
       <SideBarIcon
         icon={<GoSignOut size={28} />}
         text={"Sign Out"}
