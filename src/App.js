@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <header></header>
-      <section>{user ? <Home /> : <SignIn />}</section>
+      <section>{user ? <ChatRoom /> : <SignIn />}</section>
     </div>
   );
 }
