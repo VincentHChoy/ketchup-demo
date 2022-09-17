@@ -21,4 +21,12 @@
     text-xs font-bold
     transition-all duration-100 origin-left scale-0
   }
+  .icon{
+    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto 
+    shadow-lg bg-primary text-white
+    hover:bg-white
+    hover:text-primary 
+    rounded-3xl 
+
+  }
 }

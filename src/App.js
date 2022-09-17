@@ -12,16 +12,13 @@ function App() {
   const [user] = useAuthState(auth);
 
   return (
-
     <div className="App">
        <BrowserRouter>
-
       <header></header>
       <section>{user ? <Home /> : <SignIn />}</section>
     </BrowserRouter>
+     </div>  
 
-      </div>
-      
   );
 }
 
