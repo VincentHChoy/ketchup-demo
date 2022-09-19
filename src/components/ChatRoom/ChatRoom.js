@@ -1,25 +1,63 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { auth, firebase, firestore } from "../../firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { AiFillDownCircle } from "react-icons/ai";
+import { useParams } from 'react-router-dom'
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+
 
 import ChatMessage from "../ChatMessage/ChatMessage";
 import Sidebar from "../Sidebar/Sidebar";
 import Button from "../Button/Button";
-
 import "./ChatRoom.css";
 
-function ChatRoom() {
+const ChatRoom = () => {
+  //ref point for scroll to bottom
   const dummy = useRef();
-  const messagesRef = firestore.collection("messages");
-  const query = messagesRef.orderBy("createdAt").limit(1000);
+  const { chatId } = useParams();
+  //firestore ref and query parameters
+  const messagesRef = firestore
+    .collection("message")
+    const [messages, setMessages] = useState(null)
 
-  const [messages] = useCollectionData(query, { idField: "id" });
+  // const messagesRef = doc(firestore, "message");
+
+  // const query = messagesRef
+  // .orderBy("createdAt").limit(1000);
+  // .where("cid", "==", "bbbg")
+  // .orderBy('createdAt')
+  // const q = query(collection(firestore, "message"), where("cid", "==", "bbbg") )
+
+  const readData = async () => {
+    
+    // attempts to fetch data for the referenced chart
+    let messages = []
+    const q = query(collection(firestore, "message"), orderBy("createdAt") )
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      messages.push(doc.data())  
+    })
+    setMessages(filterMessages(messages)) 
+  };
+
+  useEffect(() => {
+    readData()
+  }, [])
+
+  const filterMessages = (messages) => {
+    return messages.filter((message) => {
+      return message.cid === chatId
+    })
+
+  }
+
   const [formValue, setFormValue] = useState("");
 
   const scrollToBottom = () => {
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
+
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -31,6 +69,7 @@ function ChatRoom() {
         uid,
         photoURL,
         displayName,
+        cid: chatId
       });
     } catch (e) {
       alert(e)
@@ -39,12 +78,14 @@ function ChatRoom() {
     scrollToBottom();
   };
 
+
+
+
   return (
     <main className="chatroom">
       <main className="chat">
         <Sidebar />
-        {messages &&
-          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+        {messages && messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
 
         <div ref={dummy}></div>
       </main>
