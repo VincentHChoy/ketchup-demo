@@ -12,9 +12,9 @@ function Sidebar(props) {
     <div className="fixed top-0 left-0 h-screen w-20 m-0 flex flex-col bg-white text-primary shadow-lg z-20">
       <Link to="/">
         <img
-          src="logo-cropped.jpg"
+          src="/logo-cropped.jpg"
           alt="logo"
-          class="my-5 mx-auto w-1/2 hover:animate-bounce cursor-pointer"
+          className="my-5 mx-auto w-1/2 hover:animate-bounce cursor-pointer"
         />
       </Link>
 
