@@ -3,7 +3,7 @@ import { auth, firebase, firestore } from "../../firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { AiFillDownCircle } from "react-icons/ai";
 import { useParams } from 'react-router-dom'
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import { collection, query, where, getDocs, orderBy, doc } from "firebase/firestore";
 
 
 import ChatMessage from "../ChatMessage/ChatMessage";
@@ -11,22 +11,37 @@ import Sidebar from "../Sidebar/Sidebar";
 import Button from "../Button/Button";
 import "./ChatRoom.css";
 
+
+const dummyData = [
+  {
+    text: 'hello world',
+    createdAt: 'september',
+    uid: '111111',
+    photoURL: 'https://www.savacations.com/wp-content/uploads/2021/02/Blog-Capybara-Pantanal-Brazil3.jpg',
+    displayName: "Capybara",
+    cid: "bbbg"
+
+  },
+  {
+    text: 'hello world',
+    createdAt: 'september',
+    uid: 'mRtLOMQ8bGZcdbZFzC6phQi3n083',
+    photoURL: 'https://lh3.googleusercontent.com/a/AItbvmkIu-ES_oxt2wwInQNIKDWW1fZ62SuoPdSeHMgp=s96-c',
+    displayName: "Vincent",
+    cid: "bbbg"
+
+  }
+]
+
 const ChatRoom = () => {
   //ref point for scroll to bottom
   const dummy = useRef();
   const { chatId } = useParams();
   //firestore ref and query parameters
-  const messagesRef = firestore
-    .collection("message")
-    const [messages, setMessages] = useState(null)
+  const [messages, setMessages] = useState(null)
 
-  // const messagesRef = doc(firestore, "message");
+  const messagesRef = collection(firestore, "message");
 
-  // const query = messagesRef
-  // .orderBy("createdAt").limit(1000);
-  // .where("cid", "==", "bbbg")
-  // .orderBy('createdAt')
-  // const q = query(collection(firestore, "message"), where("cid", "==", "bbbg") )
 
   const readData = async () => {
     
@@ -37,12 +52,14 @@ const ChatRoom = () => {
     querySnapshot.forEach((doc) => {
       messages.push(doc.data())  
     })
+    console.log('readData loaded');
     setMessages(filterMessages(messages)) 
+    
   };
 
   useEffect(() => {
     readData()
-  }, [messages])
+  }, [])
 
   const filterMessages = (messages) => {
     return messages.filter((message) => {
@@ -61,23 +78,23 @@ const ChatRoom = () => {
   const sendMessage = async (e) => {
     e.preventDefault();
     const { uid, photoURL, displayName } = auth.currentUser;
-    try {
-      await messagesRef.add({
+    const messageData = {
         text: formValue,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         uid,
         photoURL,
         displayName,
         cid: chatId
-      });
+      }
+    try {
+      await messagesRef.add(messageData);
     } catch (e) {
       alert(e)
     }
+    setMessages([...messages,messageData])
     setFormValue("");
     scrollToBottom();
   };
-
-
 
 
   return (

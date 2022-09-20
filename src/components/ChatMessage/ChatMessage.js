@@ -10,6 +10,7 @@ function ChatMessage(props) {
 
   const time = createdAt?.toDate();
 
+
   const a = moment(time).fromNow();
   return (
     <>
