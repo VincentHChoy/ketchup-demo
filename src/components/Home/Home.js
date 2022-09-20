@@ -9,7 +9,7 @@ function Home() {
     <main className="flex flex-row justify-center item-center">
       <Sidebar />
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/" element={<HomePage />}/>
         <Route path="chat" element={<ChatRoom />} />
         <Route path="/chat/:chatId" element={<ChatRoom />} />
         <Route path="docs" element={<div>Docs Placeholder</div>} />

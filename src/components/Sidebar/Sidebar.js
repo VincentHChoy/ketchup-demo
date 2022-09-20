@@ -14,7 +14,7 @@ function Sidebar(props) {
         <img
           src="/logo-cropped.jpg"
           alt="logo"
-          className="my-5 mx-auto w-1/2 hover:animate-bounce cursor-pointer"
+          className="py-5 mx-auto w-1/2 hover:animate-bounce cursor-pointer"
         />
       </Link>
 
