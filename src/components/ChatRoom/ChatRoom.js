@@ -43,7 +43,7 @@ const ChatRoom = () => {
 
   useEffect(() => {
     readData()
-  }, [])
+  }, [messages])
 
   const filterMessages = (messages) => {
     return messages.filter((message) => {
