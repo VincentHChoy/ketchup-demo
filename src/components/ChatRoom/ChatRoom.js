@@ -42,9 +42,10 @@ const ChatRoom = () => {
   //ref point for scroll to bottom
   const dummy = useRef();
   const { chatId } = useParams();
-  //firestore ref and query parameters
+  const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState(null);
-
+  
+  //firestore ref and query parameters
   const messagesRef = collection(firestore, "message");
 
   const readData = async () => {
@@ -68,8 +69,6 @@ const ChatRoom = () => {
       return message.cid === chatId;
     });
   };
-
-  const [formValue, setFormValue] = useState("");
 
   const scrollToBottom = () => {
     dummy.current.scrollIntoView({ behavior: "smooth" });
