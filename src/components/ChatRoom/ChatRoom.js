@@ -35,7 +35,6 @@ const ChatRoom = () => {
     const q = query(collection(firestore, "message"), orderBy("createdAt") )
     const querySnapshot = await getDocs(q)
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
       messages.push(doc.data())  
     })
     setMessages(filterMessages(messages)) 
