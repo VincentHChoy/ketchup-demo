@@ -42,10 +42,11 @@ const dummyData = [
 const ChatRoom = () => {
   //ref point for scroll to bottom
   const dummy = useRef();
+  const inputRef = useRef();
   const { chatId } = useParams();
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState(null);
-  
+
   //firestore ref and query parameters
   const messagesRef = collection(firestore, "message");
 
@@ -65,6 +66,12 @@ const ChatRoom = () => {
     readData()
   }, []);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [inputRef]);
+
   const filterMessages = (messages) => {
     return messages.filter((message) => {
       return message.cid === chatId;
@@ -73,7 +80,7 @@ const ChatRoom = () => {
 
   const scrollToBottom = () => {
     dummy.current.scrollIntoView({ behavior: "smooth" });
-    console.log('scrolling to bottom');
+    console.log("scrolling to bottom");
   };
 
   const sendMessage = async (e) => {
@@ -90,18 +97,19 @@ const ChatRoom = () => {
     console.log(messageData.createdAt);
 
     try {
-      await addDoc(messagesRef,messageData
-        );
-        console.log(messageData);
+      // await addDoc(messagesRef, messageData);
+      console.log(messageData);
     } catch (e) {
       alert(e);
     }
     setMessages([...messages, messageData]);
     setFormValue("");
-    dummy.current.scrollIntoView({ behavior: "smooth" });
+    
+    setTimeout(() => {
+      dummy.current.scrollIntoView({ behavior: "smooth" });
+    }, 0);
+
   };
-
-
 
   return (
     <main className="chatroom">
@@ -109,7 +117,6 @@ const ChatRoom = () => {
         <Sidebar />
         {messages &&
           messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
-
         <div ref={dummy}></div>
       </main>
       <button
@@ -118,7 +125,6 @@ const ChatRoom = () => {
       >
         <AiFillDownCircle size={28} />
       </button>
-
       <form
         className="fixed bottom-0 left-20 ml-5 mb-0 text-2xl pb-5 bg-white w-screen"
         onSubmit={sendMessage}
