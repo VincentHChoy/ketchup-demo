@@ -21,11 +21,20 @@ const firebaseConfig = {
   measurementId: "G-LTR1N6E6VB",
 };
 
+const firebaseConfigDonna = {
+  apiKey: "AIzaSyD6_feQ7biUqoY6sSII7EBHTO9wI5M1Ado",
+  authDomain: "ketchupdonna-c5968.firebaseapp.com",
+  projectId: "ketchupdonna-c5968",
+  storageBucket: "ketchupdonna-c5968.appspot.com",
+  messagingSenderId: "929228426077",
+  appId: "1:929228426077:web:6959c531b7e03651e3b6b4"
+};
+
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfigDonna);
 const analytics = getAnalytics(app);
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfigDonna);
 const auth = firebaseApp.auth();
 const firestore = firebaseApp.firestore();
 

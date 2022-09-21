@@ -54,7 +54,10 @@ const ChatRoom = () => {
     // attempts to fetch data for the referenced chart
     let messages = [];
     const q = query(collection(firestore, "message"), orderBy("createdAt"));
+    
     const querySnapshot = await getDocs(q);
+    console.log('@@@@@@@@@@');
+    console.log(querySnapshot)
     querySnapshot.forEach((doc) => {
       messages.push(doc.data());
     });
@@ -63,7 +66,16 @@ const ChatRoom = () => {
   };
 
   useEffect(() => {
-    readData()
+    const unsub = firestore.collection('message').orderBy('createdAt').limit(10000).onSnapshot((snap) => {
+      let messages = []
+      snap.forEach((doc) => {
+        messages.push(doc.data());
+        
+      });
+      setMessages(filterMessages(messages));
+    })
+
+    return unsub;
   }, []);
 
   useEffect(() => {
@@ -97,7 +109,7 @@ const ChatRoom = () => {
     console.log(messageData.createdAt);
 
     try {
-      // await addDoc(messagesRef, messageData);
+      await addDoc(messagesRef, messageData);
       console.log(messageData);
     } catch (e) {
       alert(e);
