@@ -8,10 +8,10 @@ function ChatMessage(props) {
 
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
 
-  const time = createdAt?.toDate();
-
+  const time = createdAt.toDate();
 
   const a = moment(time).fromNow();
+
   return (
     <>
       <span className='time'>{a}</span>
