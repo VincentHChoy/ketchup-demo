@@ -10,6 +10,7 @@ import {
   getDocs,
   orderBy,
   doc,
+  addDoc,
 } from "firebase/firestore";
 
 import ChatMessage from "../ChatMessage/ChatMessage";
@@ -61,7 +62,7 @@ const ChatRoom = () => {
   };
 
   useEffect(() => {
-    readData();
+    readData()
   }, []);
 
   const filterMessages = (messages) => {
@@ -72,6 +73,7 @@ const ChatRoom = () => {
 
   const scrollToBottom = () => {
     dummy.current.scrollIntoView({ behavior: "smooth" });
+    console.log('scrolling to bottom');
   };
 
   const sendMessage = async (e) => {
@@ -79,21 +81,27 @@ const ChatRoom = () => {
     const { uid, photoURL, displayName } = auth.currentUser;
     const messageData = {
       text: formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: firebase.firestore.Timestamp.now(),
       uid,
       photoURL,
       displayName,
       cid: chatId,
     };
+    console.log(messageData.createdAt);
+
     try {
-      await messagesRef.add(messageData);
+      await addDoc(messagesRef,messageData
+        );
+        console.log(messageData);
     } catch (e) {
       alert(e);
     }
     setMessages([...messages, messageData]);
     setFormValue("");
-    scrollToBottom();
+    dummy.current.scrollIntoView({ behavior: "smooth" });
   };
+
+
 
   return (
     <main className="chatroom">
