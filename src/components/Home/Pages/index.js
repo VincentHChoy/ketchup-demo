@@ -3,26 +3,32 @@ import { auth, firestore } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc, doc } from "firebase/firestore";
 import Button from "../../Button/Button";
-import Typewriter from "../../Typewriter/Typewriter";
+// import Typewriter from "../../Typewriter/Typewriter";
 
-const email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const EMAIL_JS_SERVICE_ID = "service_z3ywa1s";
 const EMAIL_JS_TEMPLATE_ID = "template_ep7mphh";
 const EMAIL_JS_PUBLIC_KEY = "EKnx5SInPFQG3jWSG";
 
+const validateEmail = (email) => {
+  const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return res.test(String(email).toLowerCase());
+};
+
+
 const FALLBACK_PHOTO_URL =
   "https://4.bp.blogspot.com/-NiUcogaBYrk/UioQgTmkGuI/AAAAAAAAClg/YOdyn5RB4W4/s1600/minion_icon_image_picfishblogspotcom+%25287%2529.png";
 function Home() {
   const [email, setEmail] = React.useState("");
+
+  const isEmailValid = validateEmail(email) || email.length === 0;
+
   const { photoURL, displayName, uid } = auth.currentUser;
   const navigate = useNavigate();
 
-  console.log(photoURL, "photoURL");
-  console.log(auth.currentUser, "auth current user");
 
   const createChat = async () => {
-    console.log("hello world");
+  
     // Add a new document with a generated id.
     const chatRef = doc(collection(firestore, "chat"));
     await addDoc(collection(firestore, "chat"), {
@@ -30,7 +36,7 @@ function Home() {
       users: [uid],
     });
 
-    console.log("Document written with ID: ", chatRef.id);
+   
     const link = `/chat/${chatRef.id}`;
 
     sendEmail();
@@ -38,9 +44,11 @@ function Home() {
   };
 
   const sendEmail = () => {
-    if (!email_regex.test(email)) {
-      alert("invalid email");
+
+    if (!validateEmail(email)) {
+      alert('Email cannot be empty')
     } else {
+
       // eslint-disable-next-line no-undef
       emailjs.send(
         EMAIL_JS_SERVICE_ID,
@@ -56,7 +64,7 @@ function Home() {
 
   return (
     <main className="flex flex-col justify-center items-center h-screen space-y-5">
-      <h1 className="font-sans text-6xl font-bold">Ketch Up</h1>
+      <h1 className="font-sans text-6xl font-bold ">Ketch Up</h1>
       <h1 className="font-sans text-2xl animate-fade-in-down-1"> Hello {displayName}!</h1>
       <h1 className="font-sans text-xl animate-fade-in-down-2"> Ready to Ketch Up?</h1>
 
@@ -81,7 +89,8 @@ function Home() {
           className="w-96 my-5 text-base text-primary outline-none border-b-2 border-rgb(83, 82, 82)"
           placeholder="type in your colleagues email to start collaborating"
         />
-        <Button handleClick={createChat} message={"Send"} />
+        {!isEmailValid && <div className="flex mb-2 font-sans text-sm font-bold">Email Invalid</div>}
+        <Button style={{ opacity: isEmailValid ? 1 : 0.5, 'pointer-events': isEmailValid ? 'auto' : 'none'}} handleClick={createChat} message={"Send"} />
       </section>
     </main>
   );
