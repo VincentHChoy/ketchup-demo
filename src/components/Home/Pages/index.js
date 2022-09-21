@@ -3,23 +3,34 @@ import { auth, firestore } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc, doc } from "firebase/firestore";
 import Button from "../../Button/Button";
-import Typewriter from "../../Typewriter/Typewriter";
+// import Typewriter from "../../Typewriter/Typewriter";
 
-const email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const EMAIL_JS_SERVICE_ID = "service_z3ywa1s";
 const EMAIL_JS_TEMPLATE_ID = "template_ep7mphh";
 const EMAIL_JS_PUBLIC_KEY = "EKnx5SInPFQG3jWSG";
 
+const validateEmail = (email) => {
+  const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return res.test(String(email).toLowerCase());
+};
+
+
 const FALLBACK_PHOTO_URL =
   "https://4.bp.blogspot.com/-NiUcogaBYrk/UioQgTmkGuI/AAAAAAAAClg/YOdyn5RB4W4/s1600/minion_icon_image_picfishblogspotcom+%25287%2529.png";
 function Home() {
   const [email, setEmail] = React.useState("");
+
+  const isEmailValid = validateEmail(email);
+
+
+  console.log('@@@@@@');
+  console.log(isEmailValid);
   const { photoURL, displayName, uid } = auth.currentUser;
   const navigate = useNavigate();
 
-  console.log(photoURL, "photoURL");
-  console.log(auth.currentUser, "auth current user");
+  // console.log(photoURL, "photoURL");
+  // console.log(auth.currentUser, "auth current user");
 
   const createChat = async () => {
     console.log("hello world");
@@ -38,9 +49,11 @@ function Home() {
   };
 
   const sendEmail = () => {
-    if (!email_regex.test(email)) {
-      alert("invalid email");
+    console.log(validateEmail)
+    if (!validateEmail(email)) {
+
     } else {
+
       // eslint-disable-next-line no-undef
       emailjs.send(
         EMAIL_JS_SERVICE_ID,
@@ -81,7 +94,8 @@ function Home() {
           className="w-96 my-5 text-base text-primary outline-none border-b-2 border-rgb(83, 82, 82)"
           placeholder="type in your colleagues email to start collaborating"
         />
-        <Button handleClick={createChat} message={"Send"} />
+        {!isEmailValid && <div>Email Invalid</div>}
+        <Button style={{ opacity: isEmailValid ? 1 : 0.5, 'pointer-events': isEmailValid ? 'auto' : 'none'}} handleClick={createChat} message={"Send"} />
       </section>
     </main>
   );
