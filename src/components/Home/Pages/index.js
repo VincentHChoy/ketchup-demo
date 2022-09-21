@@ -90,7 +90,7 @@ function Home() {
           placeholder="type in your colleagues email to start collaborating"
         />
         {!isEmailValid && <div className="flex mb-2 font-sans text-sm font-bold">Email Invalid</div>}
-        <Button style={{ opacity: isEmailValid ? 1 : 0.5, 'pointer-events': isEmailValid ? 'auto' : 'none'}} handleClick={createChat} message={"Send"} />
+        <Button style={{ opacity: isEmailValid&&email.length? 1 : 0.5, 'pointer-events': isEmailValid &&email.length? 'auto' : 'none'}} handleClick={createChat} message={"Send"} />
       </section>
     </main>
   );
