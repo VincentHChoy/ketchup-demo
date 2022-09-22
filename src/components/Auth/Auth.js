@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 import LogIn from "../Login/Login";
 import LogOut from "../Logout/Logout";
 
-function GoogleAuth() {
+function Auth(props) {
   const [signedIn, setSignedIn] = useState(false);
   const [createdFile, setCreatedFile] = useState(false);
   const [fileId, setFileId] = useState(false);
@@ -15,8 +15,7 @@ function GoogleAuth() {
 
   const createFile = (tag) => {
     const accessToken = gapi.auth.getToken().access_token;
-    const fileName = tag + "Hello world";
-    fetch("https://docs.googleapis.com/v1/documents?title=KetchUp", {
+    fetch(props.route, {
       method: "POST",
       headers: new Headers({ Authorization: "Bearer " + accessToken }),
     })
@@ -25,11 +24,11 @@ function GoogleAuth() {
       })
       .then((val) => {
         console.log(val);
-        console.log(val.documentId);
+        if (val.documentId) setFileId(val.documentId);
+        if (val.spreadsheetId) setFileId(val.spreadsheetId);
         setCreatedFile(true);
-        setFileId(val.documentId);
 
-        // <iframe style={{ marginLeft: '80px', width: '100%', height: '100vh' }} class='googleweb' src="https://docs.google.com/document/d/1TbQXeYswsVU67zXm8MCco2a38bjo_o-1kC-al4kvuqg/edit" title="Google Docs"></iframe>
+        console.log(fileId);
       });
   };
 
@@ -60,7 +59,7 @@ function GoogleAuth() {
         {signedIn && !createdFile && (
           <Button
             handleClick={createFile}
-            message={"Create new Google Document"}
+            message={"Create new Google Sheet"}
           />
         )}
       </div>
@@ -69,8 +68,8 @@ function GoogleAuth() {
       {createdFile && signedIn &&(
         <iframe
           style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
-          class="googleweb"
-          src={`https://docs.google.com/document/d/${fileId}/edit`}
+          className="googleweb"
+          src={`https://docs.google.com/${props.type}/d/${fileId}/edit`}
           title="Google Docs"
         ></iframe>
       )}
@@ -78,4 +77,4 @@ function GoogleAuth() {
   );
 }
 
-export default GoogleAuth;
+export default Auth;
