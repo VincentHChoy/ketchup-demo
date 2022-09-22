@@ -13,7 +13,7 @@ const SignIn = () => {
   return (
     <section className='grid h-screen place-items-center'>
       <div className="pb-30">
-        <img src="logo.svg" alt='logo' className='logo' />
+        <img src="/logo.svg" alt='logo' className='logo' />
 
       </div>
 
