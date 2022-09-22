@@ -18,8 +18,11 @@ const validateEmail = (email) => {
 
 const FALLBACK_PHOTO_URL =
   "https://4.bp.blogspot.com/-NiUcogaBYrk/UioQgTmkGuI/AAAAAAAAClg/YOdyn5RB4W4/s1600/minion_icon_image_picfishblogspotcom+%25287%2529.png";
+
+
 function Home() {
   const [email, setEmail] = React.useState("");
+  const [chatLink,setChatLink]=React.useState('')
 
   const isEmailValid = validateEmail(email) || email.length === 0;
 
@@ -38,12 +41,14 @@ function Home() {
 
    
     const link = `/chat/${chatRef.id}`;
-
-    sendEmail();
+    setChatLink(link);
+    sendEmail(link);
     navigate(link);
+
   };
 
-  const sendEmail = () => {
+  const sendEmail = (link) => {
+
 
     if (!validateEmail(email)) {
       alert('Email cannot be empty')
@@ -54,7 +59,8 @@ function Home() {
         EMAIL_JS_SERVICE_ID,
         EMAIL_JS_TEMPLATE_ID,
         {
-          link: "localhost:3000",
+          name: displayName,
+          address: `http://localhost:3000/${link}`,
           user_email: email,
         },
         EMAIL_JS_PUBLIC_KEY
