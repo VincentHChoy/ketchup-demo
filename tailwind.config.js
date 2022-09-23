@@ -16,12 +16,19 @@ module.exports = {
       //   ...fontFamily,
       //   'sans': ['Source Sans Pro', "sans - serif"],
       //   },
+      minWidth: {
+        'button-width': '120px',
+      },
 
       boxShadow:{
-        '3xl': '4px 4px 0 0 #422800',
+        'button': '4px 4px 0 0 #E86158',
+        '3xl': '4px 4px 0 0 #FBE4C1',
+        '3xs': '2px 2px 0 0 black',
       },
       colors: {
-        primary:"#422800",
+        primary:"#FBE4C1",
+        secondary:"#E86158",
+        accent: "black",
         gray: {
           900: '#202225',
           800: '#2f3136',

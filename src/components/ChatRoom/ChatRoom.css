@@ -25,7 +25,6 @@ p {
   margin: 10px 10px;
   border-radius: 25px;
   position: relative;
-  color: white;
   text-align: center;
 
 }
@@ -40,8 +39,6 @@ p {
 }
 
 
-
-
 .message {
   display: flex;
   align-items: center;
@@ -53,17 +50,17 @@ p {
 
 }
 
-.sent p {
+/* .sent p {
   color: white;
   background: #0b93f6;
   align-self: flex-end;
 
-}
+} */
 
-.received p {
+/* .received p {
   background: #e5e5ea;
   color: black;
-}
+} */
 
 .message-input {
   display: flex;

@@ -124,7 +124,6 @@ p {
   padding: 10px 20px;
   border-radius: 25px;
   position: relative;
-  color: white;
   text-align: center;
 }
 
@@ -138,7 +137,7 @@ p {
   flex-direction: row-reverse;
 }
 
-.sent p {
+/* .sent p {
   color: white;
   background: #0b93f6;
   align-self: flex-end;
@@ -147,7 +146,7 @@ p {
 .received p {
   background: #e5e5ea;
   color: black;
-}
+} */
 
 img {
   width: 40px;
