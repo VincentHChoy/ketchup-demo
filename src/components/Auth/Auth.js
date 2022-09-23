@@ -23,12 +23,11 @@ function Auth(props) {
         return res.json();
       })
       .then((val) => {
-        console.log(val);
+
         if (val.documentId) setFileId(val.documentId);
         if (val.spreadsheetId) setFileId(val.spreadsheetId);
         setCreatedFile(true);
 
-        console.log(fileId);
       });
   };
 
