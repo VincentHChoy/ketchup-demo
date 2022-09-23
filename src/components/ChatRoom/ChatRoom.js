@@ -18,6 +18,8 @@ import Sidebar from "../Sidebar/Sidebar";
 import Button from "../Button/Button";
 import "./ChatRoom.css";
 
+import { useSpeechToText  } from "./useSpeechToText";
+
 const dummyData = [
   {
     text: "hello world",
@@ -47,8 +49,19 @@ const ChatRoom = () => {
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState(null);
 
+
+  const { startRecording, stopRecording, results, isRecording } = useSpeechToText();
   //firestore ref and query parameters
   const messagesRef = collection(firestore, "message");
+
+  React.useEffect(() => {
+    setFormValue(results);
+  }, [results])
+
+  const handleRecordButtonClick = () => {
+    onmousedown = startRecording;
+    onmouseup = stopRecording;
+  }
 
   const readData = async () => {
     // attempts to fetch data for the referenced chart
@@ -56,12 +69,11 @@ const ChatRoom = () => {
     const q = query(collection(firestore, "message"), orderBy("createdAt"));
     
     const querySnapshot = await getDocs(q);
-    console.log('@@@@@@@@@@');
-    console.log(querySnapshot)
+
     querySnapshot.forEach((doc) => {
       messages.push(doc.data());
     });
-    console.log("readData loaded");
+
     setMessages(filterMessages(messages));
   };
 
@@ -92,7 +104,7 @@ const ChatRoom = () => {
 
   const scrollToBottom = () => {
     dummy.current.scrollIntoView({ behavior: "smooth" });
-    console.log("scrolling to bottom");
+
   };
 
   const sendMessage = async (e) => {
@@ -106,11 +118,9 @@ const ChatRoom = () => {
       displayName,
       cid: chatId,
     };
-    console.log(messageData.createdAt);
-
     try {
       await addDoc(messagesRef, messageData);
-      console.log(messageData);
+
     } catch (e) {
       alert(e);
     }
@@ -137,6 +147,8 @@ const ChatRoom = () => {
       >
         <AiFillDownCircle size={28} />
       </button>
+     
+         
       <form
         className="fixed bottom-0 left-20 ml-5 mb-0 text-2xl pb-5 bg-white w-screen"
         onSubmit={sendMessage}
@@ -148,7 +160,12 @@ const ChatRoom = () => {
             value={formValue}
             onChange={(event) => setFormValue(event.target.value)}
           />
+        
+           <button onClick={handleRecordButtonClick} style={{ opacity: isRecording ? 1 : 0.5 }} className="mr-5 ml-5"> <svg class="h-8 w-8 text-black"   fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
+           </svg></button>
           <Button message={"Submit"} type="submit" />
+           
         </section>
       </form>
     </main>
