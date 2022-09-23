@@ -10,7 +10,7 @@ function Auth(props) {
   const [fileId, setFileId] = useState(false);
   const CLIENT_ID =
     "866320623023-g7mi0qumj5o3rjaedn9ciirsnft8n4eb.apps.googleusercontent.com";
-  const API_KEY = "";
+  const API_KEY = "AIzaSyDPRc79fqSHurxm6_3RWiNSiOappeu80YU";
   const SCOPES = "https://www.googleapis.com/auth/drive";
 
   const createFile = (tag) => {
