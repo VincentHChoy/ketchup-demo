@@ -54,17 +54,23 @@ function Auth(props) {
 
   return (
     <>
-      <div>
+      <main className="flex justify-center items-center h-screen">
         {signedIn && !createdFile && (
-          <Button
-            handleClick={createFile}
-            message={"Create new Google Sheet"}
-          />
+          <div className="h-72 flex flex-col justify-evenly items-center">
+            <Button
+              handleClick={createFile}
+              message={`Create new Google ${props.type}`}
+            />
+            <Button
+              handleClick={''}
+              message={`Use exisiting Google ${props.type}`}
+            />
+          </div>
         )}
-      </div>
+      </main>
       {signedIn && <LogOut />}
       {!signedIn && <LogIn />}
-      {createdFile && signedIn &&(
+      {createdFile && signedIn && (
         <iframe
           style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
           className="googleweb"

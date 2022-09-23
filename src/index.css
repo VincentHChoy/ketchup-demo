@@ -2,31 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
-  .sidebar-icon{
-    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto 
-    shadow-lg bg-primary text-white
-    hover:bg-white
-    hover:text-primary 
-    rounded-3xl 
-    hover:rounded-xl
-    hover:shadow-3xl
-    transition-all duration-300 ease-linear
-    cursor-pointer;
+@layer components {
+  .sidebar-icon {
+    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg bg-primary text-secondary hover:bg-white hover:text-secondary rounded-3xl hover:rounded-xl hover:shadow-3xl transition-all duration-300 ease-linear cursor-pointer;
   }
-  .sidebar-tooltip{
-    @apply absolute w-auto p-2 m-2 min-w-max left-14
-    rounded-md shadow-md
-    text-primary bg-blue-200
-    text-xs font-bold
-    transition-all duration-100 origin-left scale-0
-  }
-  .icon{
-    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto 
-    shadow-lg bg-primary text-white
-    hover:bg-white
-    hover:text-primary 
-    rounded-3xl 
 
+  .sidebar-tooltip {
+    @apply absolute w-auto p-2 m-2 min-w-max left-14 rounded-md shadow-md text-secondary bg-primary text-xs font-bold transition-all duration-100 origin-left scale-0
+  }
+
+  .icon {
+    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg bg-secondary text-primary hover:bg-primary hover:text-secondary rounded-3xl
+  }
+
+  .button {
+    @apply bg-primary border-2 border-secondary rounded-3xl shadow-button text-secondary cursor-pointer inline-block font-semibold text-lg pt-0 px-5 leading-10 text-center no-underline select-none touch-manipulation hover:bg-secondary hover:text-primary hover:shadow-3xl active:shadow-3xs active:translate-y-px active:translate-x-px md:min-w-button-width md:pt-0 md:pr-6
+  }
+
+  .sent p {
+    @apply text-primary bg-secondary self-end
+  }
+
+ .received p{
+    @apply text-black bg-[#e5e5ea]
   }
 }
