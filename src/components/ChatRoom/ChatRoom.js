@@ -19,6 +19,8 @@ import Button from "../Button/Button";
 import "./ChatRoom.css";
 
 import { useSpeechToText } from "./useSpeechToText";
+import TextareaAutosize from 'react-textarea-autosize';
+
 
 
 const dummyData = [
@@ -151,12 +153,14 @@ const ChatRoom = () => {
         onSubmit={sendMessage}
       >
         <section className="flex content-center justify-center">
-          <input
-            className="input-message"
-            placeholder="ketchup message..."
-            value={formValue}
-            onChange={(event) => setFormValue(event.target.value)}
-          />
+          <TextareaAutosize value={formValue} onChange={(event) => setFormValue(event.target.value)} placeholder="ketchup message..."
+            maxRows={5}
+            style={{resize: 'none'}}
+           className="input-message"
+
+ />
+
+  
         
           <button  onMouseDown={startRecording} onMouseUp={stopRecording}  style={{ opacity: isRecording ? 1 : 0.5 }} className="mr-5 ml-5" >
             <svg class="h-8 w-8 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">

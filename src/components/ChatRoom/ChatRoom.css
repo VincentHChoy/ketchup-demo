@@ -76,8 +76,10 @@ p {
   border: none;
   background-color: transparent;
   outline: none;
-  border-bottom: 2px solid rgb(83, 82, 82);
+  border: 1px solid #E86158;
+  border-radius: 5px;
   margin-bottom: 5px;
+  padding: 10px;
   color: rgb(83, 82, 82);
   font-family: 'Source Sans Pro', sans-serif;
 }
