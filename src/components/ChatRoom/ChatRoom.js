@@ -59,24 +59,20 @@ const ChatRoom = () => {
     setFormValue(results);
   }, [results])
 
-  const handleRecordButtonClick = () => {
-    onmousedown = startRecording;
-    onmouseup = stopRecording;
-  }
 
-  const readData = async () => {
-    // attempts to fetch data for the referenced chart
-    let messages = [];
-    const q = query(collection(firestore, "message"), orderBy("createdAt"));
+  // const readData = async () => {
+  //   // attempts to fetch data for the referenced chart
+  //   let messages = [];
+  //   const q = query(collection(firestore, "message"), orderBy("createdAt"));
     
-    const querySnapshot = await getDocs(q);
+  //   const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      messages.push(doc.data());
-    });
+  //   querySnapshot.forEach((doc) => {
+  //     messages.push(doc.data());
+  //   });
 
-    setMessages(filterMessages(messages));
-  };
+  //   setMessages(filterMessages(messages));
+  // };
 
   useEffect(() => {
     const unsub = firestore.collection('message').orderBy('createdAt').limit(10000).onSnapshot((snap) => {
@@ -150,7 +146,7 @@ const ChatRoom = () => {
       </button>
      
          
-      <form
+      <div
         className="fixed bottom-0 left-20 ml-5 mb-0 text-2xl pb-5 bg-white w-screen"
         onSubmit={sendMessage}
       >
@@ -162,15 +158,15 @@ const ChatRoom = () => {
             onChange={(event) => setFormValue(event.target.value)}
           />
         
-          <button onClick={handleRecordButtonClick} style={{ opacity: isRecording ? 1 : 0.5 }} className="mr-5 ml-5" >
+          <button  onMouseDown={startRecording} onMouseUp={stopRecording}  style={{ opacity: isRecording ? 1 : 0.5 }} className="mr-5 ml-5" >
             <svg class="h-8 w-8 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
           </svg>
           </button>
-          <Button message={"Submit"} type="submit" />
+          <Button message={"Submit"} handleClick={sendMessage} />
            
         </section>
-      </form>
+      </div>
     </main>
   );
 };
