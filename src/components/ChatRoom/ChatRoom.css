@@ -76,8 +76,50 @@ p {
   border: none;
   background-color: transparent;
   outline: none;
-  border-bottom: 2px solid rgb(83, 82, 82);
+  border: 1px solid #E86158;
+  border-radius: 5px;
   margin-bottom: 5px;
+  padding: 10px;
   color: rgb(83, 82, 82);
   font-family: 'Source Sans Pro', sans-serif;
+}
+
+@keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+
+.spin{
+  position: relative;
+bottom: 70px;
+left: 35%;
+}
+
+.spin::before {
+  animation: 1.5s linear infinite spinner;
+  animation-play-state: inherit;
+  border: solid 5px #cfd0d1;
+  border-bottom-color: #E86158;
+  border-radius: 50%;
+  content: "";
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform;
+}
+
+.scroll-down-button{
+  position: absolute;
+  margin: 0 !important;
+  top: 10px;
+  margin-right: 12px !important;
+  left: 20px;
 }
