@@ -3,11 +3,19 @@ import React, { useEffect, useState } from "react";
 import Button from "../Button/Button";
 import LogIn from "../Login/Login";
 import LogOut from "../Logout/Logout";
+import { activeDocs, activeSheets, setDocId, setSheetsId } from "../../actions";
+import { useDispatch, useSelector } from "react-redux";
 
 function Auth(props) {
   const [signedIn, setSignedIn] = useState(false);
   const [createdFile, setCreatedFile] = useState(false);
   const [fileId, setFileId] = useState(false);
+  const activeDoc = useSelector((state) => state.isDoc);
+  const activeSheet = useSelector((state) => state.isSheets);
+  const isDocId = useSelector((state) => state.docId);
+  const isSheetsId = useSelector((state) => state.sheetsId);
+  const dispatch = useDispatch();
+
   const CLIENT_ID =
     "866320623023-g7mi0qumj5o3rjaedn9ciirsnft8n4eb.apps.googleusercontent.com";
   const API_KEY = process.env.REACT_APP_GOOGLE_KEY;
@@ -23,9 +31,17 @@ function Auth(props) {
         return res.json();
       })
       .then((val) => {
+        if (val.documentId) {
+          setFileId(val.documentId);
+          dispatch(activeDocs());
+          dispatch(setDocId(val.documentId));
+        }
+        if (val.spreadsheetId) {
+          setFileId(val.spreadsheetId);
+          dispatch(activeSheets());
+          dispatch(setSheetsId(val.spreadsheetId));
+        }
 
-        if (val.documentId) setFileId(val.documentId);
-        if (val.spreadsheetId) setFileId(val.spreadsheetId);
         setCreatedFile(true);
 
       });
@@ -62,7 +78,7 @@ function Auth(props) {
               message={`Create new Google ${props.type}`}
             />
             <Button
-              handleClick={''}
+              handleClick={""}
               message={`Use exisiting Google ${props.type}`}
             />
           </div>
