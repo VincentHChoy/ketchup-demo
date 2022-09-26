@@ -1,35 +1,18 @@
 import { gapi } from "gapi-script";
 import React, { useEffect, useState } from "react";
-import Button from "../Button/Button";
 import LogIn from "../Login/Login";
 import LogOut from "../Logout/Logout";
+import Docs from "../Iframe/Docs";
+import Sheets from "../Iframe/Sheets";
 
 function Auth(props) {
   const [signedIn, setSignedIn] = useState(false);
-  const [createdFile, setCreatedFile] = useState(false);
-  const [fileId, setFileId] = useState(false);
+
   const CLIENT_ID =
     "866320623023-g7mi0qumj5o3rjaedn9ciirsnft8n4eb.apps.googleusercontent.com";
   const API_KEY = process.env.REACT_APP_GOOGLE_KEY;
   const SCOPES = "https://www.googleapis.com/auth/drive";
 
-  const createFile = (tag) => {
-    const accessToken = gapi.auth.getToken().access_token;
-    fetch(props.route, {
-      method: "POST",
-      headers: new Headers({ Authorization: "Bearer " + accessToken }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((val) => {
-
-        if (val.documentId) setFileId(val.documentId);
-        if (val.spreadsheetId) setFileId(val.spreadsheetId);
-        setCreatedFile(true);
-
-      });
-  };
 
   useEffect(() => {
     function start() {
@@ -54,30 +37,16 @@ function Auth(props) {
 
   return (
     <>
-      <main className="flex justify-center items-center h-screen">
-        {signedIn && !createdFile && (
-          <div className="h-72 flex flex-col justify-evenly items-center">
-            <Button
-              handleClick={createFile}
-              message={`Create new Google ${props.type}`}
-            />
-            <Button
-              handleClick={''}
-              message={`Use exisiting Google ${props.type}`}
-            />
-          </div>
-        )}
-      </main>
       {signedIn && <LogOut />}
       {!signedIn && <LogIn />}
-      {createdFile && signedIn && (
-        <iframe
-          style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
-          className="googleweb"
-          src={`https://docs.google.com/${props.type}/d/${fileId}/edit`}
-          title="Google Docs"
-        ></iframe>
-      )}
+      {props.doc && 
+      <Docs 
+      signedIn={signedIn}
+      route={props.route} />}
+      {props.sheet &&
+        <Sheets
+          signedIn={signedIn}
+          route={props.route} />}
     </>
   );
 }

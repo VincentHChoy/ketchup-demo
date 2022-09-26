@@ -9,7 +9,6 @@
   background-color: white;
 }
 
-
 ul,
 li {
   text-align: left;
@@ -26,28 +25,22 @@ p {
   border-radius: 25px;
   position: relative;
   text-align: center;
-
 }
-
 
 .chatroom {
   display: flex;
   flex-direction: row;
   width: 100%;
   overflow-y: scroll;
-
 }
-
 
 .message {
   display: flex;
   align-items: center;
 }
 
-
 .sent {
   flex-direction: row-reverse;
-
 }
 
 /* .sent p {
@@ -65,8 +58,6 @@ p {
 .message-input {
   display: flex;
   width: auto;
-
-
 }
 
 .input-message {
@@ -76,12 +67,12 @@ p {
   border: none;
   background-color: transparent;
   outline: none;
-  border: 1px solid #E86158;
+  border: 1px solid #e86158;
   border-radius: 5px;
   margin-bottom: 5px;
   padding: 10px;
   color: rgb(83, 82, 82);
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 @keyframes spinner {
@@ -94,17 +85,17 @@ p {
   }
 }
 
-.spin{
+.spin {
   position: relative;
-bottom: 70px;
-left: 35%;
+  bottom: 70px;
+  left: 35%;
 }
 
 .spin::before {
   animation: 1.5s linear infinite spinner;
   animation-play-state: inherit;
   border: solid 5px #cfd0d1;
-  border-bottom-color: #E86158;
+  border-bottom-color: #e86158;
   border-radius: 50%;
   content: "";
   height: 80px;
@@ -116,7 +107,7 @@ left: 35%;
   will-change: transform;
 }
 
-.scroll-down-button{
+.scroll-down-button {
   position: absolute;
   margin: 0 !important;
   top: 10px;
