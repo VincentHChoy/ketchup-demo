@@ -19,9 +19,7 @@ import Button from "../Button/Button";
 import "./ChatRoom.css";
 
 import { useSpeechToText } from "./useSpeechToText";
-import TextareaAutosize from 'react-textarea-autosize';
-
-
+import TextareaAutosize from "react-textarea-autosize";
 
 const dummyData = [
   {
@@ -52,21 +50,20 @@ const ChatRoom = () => {
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState(null);
 
-
-  const { startRecording, stopRecording, results, isRecording } = useSpeechToText();
+  const { startRecording, stopRecording, results, isRecording } =
+    useSpeechToText();
   //firestore ref and query parameters
   const messagesRef = collection(firestore, "message");
 
   React.useEffect(() => {
     setFormValue(results);
-  }, [results])
-
+  }, [results]);
 
   // const readData = async () => {
   //   // attempts to fetch data for the referenced chart
   //   let messages = [];
   //   const q = query(collection(firestore, "message"), orderBy("createdAt"));
-    
+
   //   const querySnapshot = await getDocs(q);
 
   //   querySnapshot.forEach((doc) => {
@@ -77,14 +74,17 @@ const ChatRoom = () => {
   // };
 
   useEffect(() => {
-    const unsub = firestore.collection('message').orderBy('createdAt').limit(10000).onSnapshot((snap) => {
-      let messages = []
-      snap.forEach((doc) => {
-        messages.push(doc.data());
-        
+    const unsub = firestore
+      .collection("message")
+      .orderBy("createdAt")
+      .limit(10000)
+      .onSnapshot((snap) => {
+        let messages = [];
+        snap.forEach((doc) => {
+          messages.push(doc.data());
+        });
+        setMessages(filterMessages(messages));
       });
-      setMessages(filterMessages(messages));
-    })
 
     return unsub;
   }, []);
@@ -103,7 +103,6 @@ const ChatRoom = () => {
 
   const scrollToBottom = () => {
     dummy.current.scrollIntoView({ behavior: "smooth" });
-
   };
 
   const sendMessage = async (e) => {
@@ -119,61 +118,77 @@ const ChatRoom = () => {
     };
     try {
       await addDoc(messagesRef, messageData);
-
     } catch (e) {
       alert(e);
     }
     setMessages([...messages, messageData]);
     setFormValue("");
-    
+
     setTimeout(() => {
       dummy.current.scrollIntoView({ behavior: "smooth" });
     }, 0);
-
   };
 
   return (
     <main className="chatroom">
-
       <main className="chat">
         <Sidebar />
         {messages &&
           messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
         <div ref={dummy}></div>
       </main>
-      
-     
-         
+
       <div
         className="fixed bottom-0 left-20 ml-5 mb-0 text-2xl pb-5 bg-white w-screen"
         onSubmit={sendMessage}
       >
-          {isRecording && <div class="spin"></div>}
-      
+        {isRecording && <div class="spin"></div>}
+
         <section className="flex content-center justify-center">
-
-<button
-        className="icon scroll-down-button  animate-bounce "
-        onClick={scrollToBottom}
-      >
-        <AiFillDownCircle size={28} />
-      </button>
-
-          <TextareaAutosize value={formValue} onChange={(event) => setFormValue(event.target.value)} placeholder="ketchup message..."
-            maxRows={5}
-            style={{resize: 'none'}}
-           className="input-message"
-
- />
-
-
-          <button  onMouseDown={startRecording} onMouseUp={stopRecording}  style={{ opacity: isRecording ? 1 : 0.5 }} className="mr-5 ml-5" >
-            <svg class="h-8 w-8 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
-          </svg>
+          <button
+            className="icon scroll-down-button animate-bounce"
+            onClick={scrollToBottom}
+          >
+            <AiFillDownCircle size={28} />
           </button>
-          <Button style={{ opacity: formValue ? 1 : 0.5 ,'pointer-events': formValue? 'auto' : 'none'}} message={"Submit"} handleClick={sendMessage} />
-           
+
+          <TextareaAutosize
+            value={formValue}
+            onChange={(event) => setFormValue(event.target.value)}
+            placeholder="ketchup message..."
+            maxRows={5}
+            style={{ resize: "none" }}
+            className="input-message"
+          />
+
+          <button
+            onMouseDown={startRecording}
+            onMouseUp={stopRecording}
+            style={{ opacity: isRecording ? 1 : 0.5 }}
+            className="mr-5 ml-5"
+          >
+            <svg
+              class="h-8 w-8 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+              />
+            </svg>
+          </button>
+          <Button
+            style={{
+              opacity: formValue ? 1 : 0.5,
+              "pointer-events": formValue ? "auto" : "none",
+            }}
+            message={"Submit"}
+            handleClick={sendMessage}
+          />
         </section>
       </div>
     </main>
