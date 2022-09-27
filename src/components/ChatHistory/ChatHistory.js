@@ -2,8 +2,13 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, firebase, firestore } from "../../firebase";
 import ChatTile from "./ChatTile";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleChat } from "../../actions";
+import { useState } from "react";
 
 function ChatHistory() {
+  const  chatVisible = useSelector((state) => state.toggleChat);
+  const dispatch = useDispatch()
   // const docRef = doc(firestore, "users", "SF");
   // const docSnap = await getDoc(docRef);
 
@@ -36,28 +41,31 @@ function ChatHistory() {
   ];
 
   return (
-    <main className="overflow-y-auto fixed bottom-5 top-5 right-5 m-0 flex flex-col bg-white text-secondary shadow-lg z-20 w-fit">
-      <header className="flex flex-row justify-between items-center mx-2 my-2">
-        <h1 className="font-bold text-xl text-center">Chats</h1>
+    <>
+    {chatVisible && 
+      <main className="overflow-y-auto fixed bottom-5 top-5 right-5 m-0 flex flex-col bg-white text-secondary shadow-lg z-20 w-fit">
+        <header className="flex flex-row justify-between items-center mx-2 my-2">
+          <h1 className="font-bold text-xl text-center">Chats</h1>
 
-        <button
-          onClick={''}
-          className='bg-secondary text-primary hover:bg-primary hover:text-secondary rounded-3xl'
-        >
-          <AiOutlineCloseCircle size={28} />
-        </button>
-      </header>
+          <button
+            onClick={()=>{dispatch(toggleChat())}}
+            className="bg-secondary text-primary hover:bg-primary hover:text-secondary rounded-3xl"
+          >
+            <AiOutlineCloseCircle size={28} />
+          </button>
+        </header>
 
-      {chats &&
-        chats.map((chat) => (
-          <ChatTile
-            key={chat.id}
-            message={chat.message}
-            chatter={chat.chatter}
-            img={chat.img}
-          />
-        ))}
-    </main>
+        {chats &&
+          chats.map((chat) => (
+            <ChatTile
+              key={chat.id}
+              message={chat.message}
+              chatter={chat.chatter}
+              img={chat.img}
+            />
+          ))}
+      </main>}
+    </>
   );
 }
 

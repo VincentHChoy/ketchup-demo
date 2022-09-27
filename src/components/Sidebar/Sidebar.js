@@ -5,9 +5,16 @@ import { SiGooglesheets, SiGooglechat, SiReadthedocs } from "react-icons/si";
 import SideBarIcon from "./SideBarIcon";
 import { auth } from "../../firebase";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleChat } from "../../actions";
+import { useState } from "react";
+
+
 
 
 function Sidebar(props) {
+  const dispatch = useDispatch()
+
   return (
     <div className="fixed top-0 left-0 h-screen w-20 m-0 flex flex-col bg-white text-primary shadow-lg z-20">
       <Link to="/">
@@ -17,13 +24,12 @@ function Sidebar(props) {
           className="py-5 mx-auto w-1/2 hover:animate-bounce cursor-pointer"
         />
       </Link>
-
-      <Link to="/chat">
         <SideBarIcon
           icon={<SiGooglechat size={28} />}
           text={"Chat"}
+          handleClick={() => dispatch(toggleChat())}
+          
         ></SideBarIcon>
-      </Link>
 
       <Link to="/sheets">
         <SideBarIcon
