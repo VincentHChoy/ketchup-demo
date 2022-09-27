@@ -6,9 +6,9 @@ function ChatTile(props) {
         referrerPolicy="no-referrer"
         src={props.img}
       />
-      <div className="flex flex-col mx-2 flex-1">
+      <div className="flex flex-col mx-2">
         <h2 className="font-bold">{props.chatter}</h2>
-        <p className="text-left px-1 py-1 mr-2 truncate text-sm w-4/6"> {props.message}</p>
+        <p className="text-left px-1 py-1 mr-2 truncate text-sm max-w-xs"> {props.message}</p>
       </div>
     </main>
   );

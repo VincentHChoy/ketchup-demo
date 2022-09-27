@@ -28,9 +28,9 @@ function Docs(props) {
 
   return (
     <>
-      <main className="flex justify-center items-center h-screen">
+      <main className="flex justify-center items-center">
         {props.signedIn && !activeDoc && (
-          <div className="h-72 flex flex-col justify-evenly items-center">
+          <div className="h-72 flex flex-col justify-evenly items-center flex-1">
             <Button
               handleClick={createFile}
               message={`Create new Google document`}

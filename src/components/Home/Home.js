@@ -10,7 +10,7 @@ function Home() {
   
 
   return (
-    <main style={{width:'100%', height: '100%', overflow: 'visible'}}className="flex flex-row justify-center item-center">
+    <main>
       <Sidebar />
       <ChatHistory/>
       <Routes>
