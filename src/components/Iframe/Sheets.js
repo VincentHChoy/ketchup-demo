@@ -29,16 +29,16 @@ function Docs(props) {
 
   return (
     <>
-      <main className="flex justify-center items-center h-screen">
+      <main className="flex justify-center items-center">
         {props.signedIn && !activeSheet && (
           <div className="h-72 flex flex-col justify-evenly items-center">
             <Button
               handleClick={createFile}
-              message={`Create new Google document`}
+              message={`Create new Google sheet`}
             />
             <Button
               handleClick={""}
-              message={`Use exisiting Google document`}
+              message={`Use exisiting Google sheet`}
             />
           </div>
         )}

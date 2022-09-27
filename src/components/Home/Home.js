@@ -5,13 +5,14 @@ import Sidebar from "../Sidebar/Sidebar";
 import HomePage from "./Pages/index";
 import './Pages/Home.css'
 import Auth from "../Auth/Auth";
-
+import ChatHistory from "../ChatHistory/ChatHistory";
 function Home() {
   
 
   return (
-    <main style={{width:'100%', height: '100%', overflow: 'visible'}}className="flex flex-row justify-center item-center">
+    <main>
       <Sidebar />
+      <ChatHistory/>
       <Routes>
         <Route path="/" element={<HomePage />}/>
         <Route path="chat" element={<ChatRoom />} />
