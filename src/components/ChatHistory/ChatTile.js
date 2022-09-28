@@ -8,7 +8,7 @@ function ChatTile(props) {
       />
       <div className="flex flex-col mx-2">
         <h2 className="font-bold">{props.chatter}</h2>
-        <p className="text-left px-1 py-1 mr-2 truncate text-sm max-w-xs"> {props.message}</p>
+        <p className="text-left px-1 py-1 mr-2 truncate text-sm max-w-xs"> {props.lastMessage}</p>
       </div>
     </main>
   );

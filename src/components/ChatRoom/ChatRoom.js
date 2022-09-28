@@ -5,11 +5,6 @@ import { AiFillDownCircle } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import {
   collection,
-  query,
-  where,
-  getDocs,
-  orderBy,
-  doc,
   addDoc,
 } from "firebase/firestore";
 

@@ -12,10 +12,6 @@ module.exports = {
         serif: ['Merriweather', 'serif'],
         cursive: ['Josefin Sans', "cursive"]
       },
-      // fontFamily: {
-      //   ...fontFamily,
-      //   'sans': ['Source Sans Pro', "sans - serif"],
-      //   },
       minWidth: {
         'button-width': '120px',
       },
