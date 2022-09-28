@@ -3,7 +3,7 @@
   flex-direction: column;
   padding: 10px;
   height: 80vh;
-  width: 100%;
+  width: 85%;
   margin: 0 0 10vh;
   margin-left: 100px;
   background-color: white;
@@ -42,18 +42,6 @@ p {
 .sent {
   flex-direction: row-reverse;
 }
-
-/* .sent p {
-  color: white;
-  background: #0b93f6;
-  align-self: flex-end;
-
-} */
-
-/* .received p {
-  background: #e5e5ea;
-  color: black;
-} */
 
 .message-input {
   display: flex;
@@ -105,12 +93,4 @@ p {
   left: 10%;
   transform: translate3d(-50%, -50%, 0);
   will-change: transform;
-}
-
-.scroll-down-button {
-  position: absolute;
-  margin: 0 !important;
-  top: 10px;
-  margin-right: 12px !important;
-  left: 20px;
 }

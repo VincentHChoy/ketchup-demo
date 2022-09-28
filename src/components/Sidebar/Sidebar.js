@@ -5,9 +5,8 @@ import { SiGooglesheets, SiGooglechat, SiReadthedocs } from "react-icons/si";
 import SideBarIcon from "./SideBarIcon";
 import { auth } from "../../firebase";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { toggleChat } from "../../actions";
-import { useState } from "react";
 
 
 

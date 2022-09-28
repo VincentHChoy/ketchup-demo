@@ -17,7 +17,7 @@ function ChatMessage(props) {
       <span className='time'>{a}</span>
       <div className={`message ${messageClass}`}>
         <img 
-          className='rounded-full w-10 '
+          className='rounded-full w-10 mx-2'
           referrerPolicy="no-referrer"
           src={
             photoURL ||
