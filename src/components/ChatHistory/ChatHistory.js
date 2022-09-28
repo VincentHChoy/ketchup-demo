@@ -23,20 +23,27 @@ function ChatHistory() {
       chatter: "Shawn",
       img: "https://cdn.slidesharecdn.com/profile-photo-ShawnThibodeau-96x96.jpg?cb=1523559870",
       message: "I am going on lunch break",
-      id: "2Ax5Ym",
+      cid: "2Ax5Ym",
     },
     {
       chatter: "Walter White",
       img: "https://spiritofcontradiction.eu/wp-content/uploads/2013/12/walter-white-with-hat-128x128.jpg",
-      message: "Wheres my money",
-      id: "Ax5Ym",
+      message: "you think that of me? No. I am the one who knocks!",
+      cid: "Ax5Ym",
     },
     {
       chatter: "Saul Goodman",
       img: "https://styles.redditmedia.com/t5_3a289z/styles/profileIcon_dppne87g62u51.jpg?width=256&height=256&frame=1&crop=256:256,smart&s=fa9caddedec070c183c1c111fdc49f05bffd59aa",
       message:
         "Hi, I’m Saul Goodman. Did you know that you have rights? The Constitution says you do. And so do I. I  ",
-      id: "2Ax5Y",
+      cid: "2Ax5Y",
+    },
+    {
+      chatter: "Jesse Pinkman",
+      img: "https://pm1.narvii.com/6320/9ac872a01a2bd2f956a64d3ff3506e96df282a15_128.jpg",
+      message:
+        "Some straight like you, age what - 60? You're just gonna break bad?",
+      cid: "xyz",
     },
   ];
 
