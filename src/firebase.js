@@ -30,11 +30,12 @@ const firebaseConfigDonna = {
   appId: "1:929228426077:web:6959c531b7e03651e3b6b4"
 };
 
+
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfigDonna);
+const app = firebase.initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-const firebaseApp = firebase.initializeApp(firebaseConfigDonna);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 const auth = firebaseApp.auth();
 const firestore = firebaseApp.firestore();
 
