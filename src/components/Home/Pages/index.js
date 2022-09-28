@@ -33,6 +33,9 @@ function Home() {
     await addDoc(collection(firestore, "chat"), {
       cid: chatRef.id,
       users: [uid],
+      img: null,
+      lastMessage: '',
+      messageTimeStamp: null
     });
 
     const link = `/chat/${chatRef.id}`;
