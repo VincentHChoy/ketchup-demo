@@ -69,7 +69,7 @@ function ChatHistory() {
         {chats &&
           chats.map((chat) => (
             <ChatTile
-              key={chat.id}
+              key={chat.cid}
               lastMessage={chat.lastMessage}
               chatter={chat.chatter}
               img={chat.img}
