@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { auth, firebase, firestore } from "../../firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { HiOutlineMicrophone } from "react-icons/hi";
 import { AiFillDownCircle } from "react-icons/ai";
-import { useParams } from "react-router-dom";
-import {
-  collection,
-  addDoc,
-} from "firebase/firestore";
+import { useParams, useLocation } from "react-router-dom";
+import { collection, addDoc } from "firebase/firestore";
 
 import ChatMessage from "../ChatMessage/ChatMessage";
 import Sidebar from "../Sidebar/Sidebar";
@@ -42,6 +40,7 @@ const ChatRoom = () => {
   //ref point for scroll to bottom
   const dummy = useRef();
   const inputRef = useRef();
+  const location = useLocation()
   const { chatId } = useParams();
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState(null);
@@ -70,6 +69,7 @@ const ChatRoom = () => {
   // };
 
   useEffect(() => {
+    console.log(location);
     const unsub = firestore
       .collection("message")
       .orderBy("createdAt")
@@ -83,13 +83,17 @@ const ChatRoom = () => {
       });
 
     return unsub;
-  }, []);
+  }, [location]);
 
+  //focus bubble on input box
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, [inputRef]);
+
+  //add user on load
+  useEffect(() => {}, []);
 
   const filterMessages = (messages) => {
     return messages.filter((message) => {
@@ -128,7 +132,6 @@ const ChatRoom = () => {
   const chatResize = chatVisible ? "w-2/3" : "";
   const inputResize = chatVisible ? "w-4/6" : "";
 
-
   return (
     <main className="chatroom">
       <main className={`chat ${chatResize}`}>
@@ -141,9 +144,11 @@ const ChatRoom = () => {
           className="fixed bottom-0 left-20 ml-5 mb-0 text-2xl pb-5 bg-white w-screen"
           onSubmit={sendMessage}
         >
-          {isRecording && <div class="spin"></div>}
+          {isRecording && <div className="spin"></div>}
 
-          <section className={`flex content-center justify-center ${inputResize}`}>
+          <section
+            className={`flex content-center justify-center ${inputResize}`}
+          >
             <button
               className="icon fixed left-40 bottom-5 animate-bounce"
               onClick={scrollToBottom}
@@ -156,7 +161,7 @@ const ChatRoom = () => {
               onChange={(event) => setFormValue(event.target.value)}
               placeholder="ketchup message..."
               maxRows={5}
-              style={{ resize: "none"  }}
+              style={{ resize: "none" }}
               className="input-message"
             />
 
@@ -164,21 +169,9 @@ const ChatRoom = () => {
               onMouseDown={startRecording}
               onMouseUp={stopRecording}
               style={{ opacity: isRecording ? 1 : 0.5 }}
-              className="mr-5 ml-5"
+              className="mr-5 ml-5 text-red-500"
             >
-              <svg
-                class="h-8 w-8 text-red-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                />
-              </svg>
+              <HiOutlineMicrophone size={28} />
             </button>
             <Button
               style={{

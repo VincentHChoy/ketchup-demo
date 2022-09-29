@@ -26,13 +26,13 @@ function ChatHistory() {
       img: "https://cdn.slidesharecdn.com/profile-photo-ShawnThibodeau-96x96.jpg?cb=1523559870",
       lastMessage: "I am going on lunch break",
       messageTimestamp: 'idk',
-      cid: "2Ax5Ym",
+      cid: "bbbg",
     },
     {
       chatter: "Walter White",
       img: "https://spiritofcontradiction.eu/wp-content/uploads/2013/12/walter-white-with-hat-128x128.jpg",
       lastMessage: "you think that of me? No. I am the one who knocks!",
-      cid: "Ax5Ym",
+      cid: "brkngbd",
     },
     {
       chatter: "Saul Goodman",
@@ -56,7 +56,7 @@ function ChatHistory() {
     {chatVisible && 
       <main className="overflow-y-auto fixed bottom-5 top-5 right-5 m-0 flex flex-col bg-white text-secondary shadow-lg z-20 w-fit">
         <header className="flex flex-row justify-between items-center mx-2 my-2">
-          <h1 className="font-bold text-xl text-center">Chats</h1>
+          <span className="font-bold text-xl text-center py-2 px-2">Chats</span>
 
           <button
             onClick={()=>{dispatch(toggleChat())}}
@@ -70,6 +70,7 @@ function ChatHistory() {
           chats.map((chat) => (
             <ChatTile
               key={chat.cid}
+              cid={chat.cid}
               lastMessage={chat.lastMessage}
               chatter={chat.chatter}
               img={chat.img}
