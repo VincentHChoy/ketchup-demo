@@ -29,6 +29,7 @@ export const useSpeechToText = () => {
 
     recognition.onresult = (event) => {
       const result = event.results[0][0].transcript;
+      console.log(event)
       console.log(result);
       setResults(result);
     }
