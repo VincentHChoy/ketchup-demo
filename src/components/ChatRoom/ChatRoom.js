@@ -134,7 +134,7 @@ const ChatRoom = () => {
       <main className={`chat ${chatResize}`}>
         <Sidebar />
         {messages &&
-          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+          messages.map((msg, index) => <ChatMessage key={msg.id} previousMessage={messages[index - 1]} message={msg} />)}
         <div ref={dummy}></div>
 
         <div

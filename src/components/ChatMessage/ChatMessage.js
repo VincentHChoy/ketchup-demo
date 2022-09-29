@@ -2,20 +2,40 @@ import { auth } from '../../firebase'
 import moment from "moment";
 import "./ChatMessage.css";
 
+const TIMESTAMP_COOLDOWN_IN_MINUTES = 15;
+
 
 function ChatMessage(props) {
   const { text, uid, photoURL, createdAt } = props.message;
 
+  let previousCreatedAt = props.previousMessage ? props.previousMessage.createdAt : null;
+
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
 
-  const time = createdAt.toDate();
+  let showTimestamp = true;
 
-  const a = moment(time).fromNow();
+  if (previousCreatedAt) {
+    const start = moment(previousCreatedAt.toDate());
+    const end = moment(createdAt.toDate());
+    
+    let duration = moment.duration(end.diff(start));
+    let minutes = duration.asMinutes();
+
+    if (minutes < TIMESTAMP_COOLDOWN_IN_MINUTES) {
+      showTimestamp = false;
+    }
+
+  }
+  
+  const time = createdAt.toDate();
+  const age = moment(time).fromNow();
 
   return (
     <>
-      <span className='time'>{a}</span>
-      <div className={`message ${messageClass}`}>
+      {showTimestamp && <span className='time'>{age}</span>}
+      <div className={`message ${messageClass}`}  style={{
+                padding : "10px"
+              }}>
         <img 
           className='rounded-full w-10 mx-2'
           referrerPolicy="no-referrer"
@@ -24,11 +44,11 @@ function ChatMessage(props) {
             "https://4.bp.blogspot.com/-NiUcogaBYrk/UioQgTmkGuI/AAAAAAAAClg/YOdyn5RB4W4/s1600/minion_icon_image_picfishblogspotcom+%25287%2529.png"
           }
         />
-        <p> {text}</p>
+        <p > {text}</p>
       </div>
     </>
   );
 }
 
 
-export default ChatMessage
+export default ChatMessage;
