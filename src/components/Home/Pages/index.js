@@ -33,7 +33,6 @@ function Home() {
     await addDoc(collection(firestore, "chats"), {
       cid: chatRef.id,
       users: [uid],
-      img: null,
       lastMessage: '',
       messageTimeStamp: null
     });
