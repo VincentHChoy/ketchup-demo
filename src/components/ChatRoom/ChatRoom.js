@@ -54,22 +54,7 @@ const ChatRoom = () => {
     setFormValue(results);
   }, [results]);
 
-  // const readData = async () => {
-  //   // attempts to fetch data for the referenced chart
-  //   let messages = [];
-  //   const q = query(collection(firestore, "message"), orderBy("createdAt"));
-
-  //   const querySnapshot = await getDocs(q);
-
-  //   querySnapshot.forEach((doc) => {
-  //     messages.push(doc.data());
-  //   });
-
-  //   setMessages(filterMessages(messages));
-  // };
-
   useEffect(() => {
-    console.log(location);
     const unsub = firestore
       .collection("message")
       .orderBy("createdAt")
@@ -80,12 +65,13 @@ const ChatRoom = () => {
           messages.push(doc.data());
         });
         setMessages(filterMessages(messages));
+        scrollToBottom()
       });
 
     return unsub;
   }, [location]);
 
-  //focus bubble on input box
+  //focus on input box on load
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
