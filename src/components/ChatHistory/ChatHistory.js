@@ -72,11 +72,12 @@ function ChatHistory() {
     return fullChats;
   };
 
-  const fetchUsers =  (userArray) => {
+  const fetchUsers = async (userArray) => {
     const filteruser = userArray.filter((x) => x !== uid)[0];
     console.log("filter user", filteruser);
     const docRef = doc(firestore, "users", filteruser);
-    const docSnap = getDoc(docRef);
+    const docSnap = await getDoc(docRef);
+    return docSnap.data()
   };
 
   const mapChatrooms = (chatrooms) =>{
