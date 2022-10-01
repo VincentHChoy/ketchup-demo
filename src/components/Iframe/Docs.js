@@ -1,12 +1,15 @@
 import { gapi } from "gapi-script";
+import { activeDocs, setDocId } from "../../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { collection, addDoc, doc } from "firebase/firestore";
+import { auth, firebase, firestore } from "../../firebase";
 import React from "react";
 import Button from "../Button/Button";
 import LogIn from "../Login/Login";
 import LogOut from "../Logout/Logout";
-import { activeDocs, setDocId } from "../../actions";
-import { useDispatch, useSelector } from "react-redux";
 
 function Docs(props) {
+  // const chatsRef = doc(firestore, "chats", cid);
   const activeDoc = useSelector((state) => state.isDoc);
   const isDocId = useSelector((state) => state.docId);
   const dispatch = useDispatch();
@@ -23,6 +26,25 @@ function Docs(props) {
       .then((val) => {
         dispatch(activeDocs());
         dispatch(setDocId(val.documentId));
+
+        //     const userData = {
+        //       uid: uid,
+        //       img: photoURL,
+        //       name: displayName,
+        //       chats: []
+        //     };
+        //     try {
+        //       await setDoc(usersRef, userData, { merge: true });
+        //       console.log('something went right');
+        //     } catch (e) {
+        //       alert(e);
+        //     }
+
+
+        //   }).catch(() => {
+        //     console.log('something went wrong');
+        //   });
+        // }
       });
   };
 

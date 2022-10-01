@@ -10,11 +10,18 @@ export const activeSheets = () => {
   }
 }
 
+export const cid = () => {
+  return {
+    type: 'CID'
+  }
+}
+
 export const toggleChat = () => {
   return {
     type: 'TOGGLE_CHAT'
   }
 }
+
 
 export const setDocId = (googleId) => {
   return {
