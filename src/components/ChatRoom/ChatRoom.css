@@ -37,6 +37,7 @@ p {
 .message {
   display: flex;
   align-items: center;
+  white-space: break-spaces;
 }
 
 .sent {

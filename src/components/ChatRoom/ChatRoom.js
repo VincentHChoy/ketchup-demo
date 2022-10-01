@@ -92,10 +92,13 @@ const ChatRoom = () => {
   };
 
   const sendMessage = async (e) => {
+    const value = formValue;
     e.preventDefault();
+    setFormValue("");
+
     const { uid, photoURL, displayName } = auth.currentUser;
     const messageData = {
-      text: formValue,
+      text: value,
       createdAt: firebase.firestore.Timestamp.now(),
       uid,
       photoURL,
@@ -105,15 +108,22 @@ const ChatRoom = () => {
     try {
       await addDoc(messagesRef, messageData);
     } catch (e) {
-      alert(e);
+      setFormValue(value);
     }
     setMessages([...messages, messageData]);
-    setFormValue("");
 
     setTimeout(() => {
       dummy.current.scrollIntoView({ behavior: "smooth" });
     }, 0);
   };
+
+  const handleInputKeyup = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      sendMessage(e);
+    }
+  }
+
+
   const chatVisible = useSelector((state) => state.toggleChat);
   const chatResize = chatVisible ? "w-2/3" : "";
   const inputResize = chatVisible ? "w-4/6" : "";
@@ -149,6 +159,8 @@ const ChatRoom = () => {
               maxRows={5}
               style={{ resize: "none" }}
               className="input-message"
+              onKeyUp={handleInputKeyup}
+            
             />
 
             <button
@@ -167,6 +179,7 @@ const ChatRoom = () => {
               message={"Submit"}
               handleClick={sendMessage}
             />
+           
           </section>
         </div>
       </main>
