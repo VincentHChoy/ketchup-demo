@@ -52,29 +52,26 @@ function ChatHistory() {
         snap.forEach((doc) => {
           chats.push(doc.data());
         });
-        setChatrooms(filterChatrooms(chats));
+        filterChatrooms(chats);
       });
   }, []);
 
 
-  const filterChatrooms = (chats) => {
-    let fullChats = [];
+  const filterChatrooms = async (chats) => {
+    let filteredChats = [];
     for (const chat of chats) {
       if (chat.users.length > 1) {
        fetchUsers(chat.users).then((res)=>{
-          fullChats.push({ ...chat, user: res });
-        });
-
+          filteredChats = [...filteredChats,{ ...chat, user: res }]
+       }).then((res) => {
+         setChatrooms(filteredChats);
+      });
       }
     }
-    console.log('full chats', fullChats);
-
-    return fullChats;
   };
 
   const fetchUsers = async (userArray) => {
     const filteruser = userArray.filter((x) => x !== uid)[0];
-    console.log("filter user", filteruser);
     const docRef = doc(firestore, "users", filteruser);
     const docSnap = await getDoc(docRef);
     return docSnap.data()

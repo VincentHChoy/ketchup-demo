@@ -1,4 +1,4 @@
-const toggleChatReducer = (state = false, action) => {
+const toggleChatReducer = (state = true, action) => {
   switch(action.type){
     case 'TOGGLE_CHAT':
       return !state;
