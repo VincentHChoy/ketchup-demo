@@ -12,7 +12,7 @@ function LogIn() {
     console.log("login Failure, current user:", res.profileObj);
   }
   return (
-    <div id='signInButton' className="fixed top-40">
+    <div id='signInButton' className="fixed top-1/2 right-1/2">
         <GoogleLogin
         clientId={clientId}
         buttonText="Login" 
