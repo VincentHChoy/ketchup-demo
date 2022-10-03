@@ -77,28 +77,6 @@ function ChatHistory() {
     return docSnap.data()
   };
 
-  const mapChatrooms = (chatrooms) =>{
-    if(chatrooms){
-      chatrooms.map((chatroom) =>{
-        return(
-          <ChatTile
-            key={chatroom.user.uid}
-            cid={chatroom.cid}
-            lastMessage={chatroom.lastMessage}
-            chatter={chatroom.user.name}
-            img={chatroom.user.img}
-          />
-        )
-        console.log("key", chatroom.user.uid )
-        console.log("cid", chatroom.cid)
-        console.log("lastMessage",  chatroom.lastMessage )
-        console.log("chatter",  chatroom.user.name )
-        console.log("img",  chatroom.user.img )
-        
-      })
-    }
-    }
-  const mappedChatrooms = mapChatrooms(chatrooms)
 
   return (
     <>
@@ -126,11 +104,10 @@ function ChatHistory() {
                 lastMessage={chatroom.lastMessage}
                 chatter={chatroom.user.name}
                 img={chatroom.user.img}
+                docId={chatroom.docId}
+                sheetsId={chatroom.sheetsId}
               />
-            )
-            )
-            }
-            {mappedChatrooms}
+            ))}
         </main>
       )}
     </>

@@ -10,11 +10,19 @@ export const activeSheets = () => {
   }
 }
 
+export const setCID = (cid) => {
+  return {
+    type: 'SET_CID',
+    payload: cid
+  }
+}
+
 export const toggleChat = () => {
   return {
     type: 'TOGGLE_CHAT'
   }
 }
+
 
 export const setDocId = (googleId) => {
   return {

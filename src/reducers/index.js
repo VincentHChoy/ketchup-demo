@@ -5,13 +5,16 @@ import sheetsIdReducer from "./sheetsId";
 
 import { combineReducers } from "redux";
 import toggleChatReducer from "./toggleChatReducer";
+import cidReducer from "./cid";
 
 const allReducers = combineReducers({
   isDoc:docReducer,
   isSheets:sheetReducer,
   docId: docIdReducer,
   sheetsId:sheetsIdReducer,
-  toggleChat:toggleChatReducer
+  toggleChat:toggleChatReducer,
+  cid:cidReducer
+  
 })
 
 export default allReducers;

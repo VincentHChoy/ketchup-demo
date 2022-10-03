@@ -1,17 +1,20 @@
 import { gapi } from "gapi-script";
+import { activeDocs, setDocId } from "../../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { setDoc } from "firebase/firestore";
+import { firestore } from "../../firebase";
 import React from "react";
 import Button from "../Button/Button";
 import LogIn from "../Login/Login";
 import LogOut from "../Logout/Logout";
-import { activeDocs, setDocId } from "../../actions";
-import { useDispatch, useSelector } from "react-redux";
 
 function Docs(props) {
+  const cid = useSelector((state) => state.cid);
   const activeDoc = useSelector((state) => state.isDoc);
   const isDocId = useSelector((state) => state.docId);
   const dispatch = useDispatch();
 
-  const createFile = (tag) => {
+  const createFile = () => {
     const accessToken = gapi.auth.getToken().access_token;
     fetch(props.route, {
       method: "POST",
@@ -20,16 +23,34 @@ function Docs(props) {
       .then((res) => {
         return res.json();
       })
-      .then((val) => {
+      .then(async (val) => {
         dispatch(activeDocs());
         dispatch(setDocId(val.documentId));
+
+        //gets doc Id
+        const docIdQuery = firestore
+          .collection("chats")
+          .where("cid", "==", cid);
+        const docId = docIdQuery.get().then(async (querySnapshot) => {
+          if (!querySnapshot.empty) {
+            const snapshot = querySnapshot.docs[0]; // use only the first document, but there could be more
+            const documentRef = snapshot.ref; // now you have a DocumentReference
+            await setDoc(
+              documentRef,
+              {
+                docId: val.documentId,
+              },
+              { merge: true }
+            );
+          }
+        });
       });
   };
 
   return (
     <>
       <main className="flex justify-center items-center">
-        {props.signedIn && !activeDoc && (
+        {props.signedIn && !isDocId && (
           <div className="h-72 flex flex-col justify-evenly items-center flex-1">
             <Button
               handleClick={createFile}
@@ -44,7 +65,7 @@ function Docs(props) {
       </main>
       {props.signedIn && <LogOut />}
       {!props.signedIn && <LogIn />}
-      {activeDoc && props.signedIn && (
+      {isDocId && props.signedIn && (
         <iframe
           style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
           className="googleweb"
