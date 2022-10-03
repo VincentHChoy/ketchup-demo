@@ -101,7 +101,7 @@ function ChatHistory() {
             </button>
           </header>
           
-          {emptyChat ? <h1 className="text-ellipsis overflow-hidden">Currently no chats,<br/> Send an email link to start collaborating</h1> :
+          {emptyChat ? <h1 className="text-ellipsis overflow-hidden px-2 mx-2">Currently no chats,<br/> Send an email link to start collaborating</h1> :
           (chatrooms && 
             chatrooms.map((chatroom) => (
               <ChatTile

@@ -21,7 +21,7 @@ function Docs(props) {
       headers: new Headers({ Authorization: "Bearer " + accessToken }),
     })
       .then((res) => {
-        return res.json();
+      return res.json();
       })
       .then((val) => {
         dispatch(activeSheets());

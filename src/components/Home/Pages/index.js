@@ -35,8 +35,8 @@ function Home() {
       users: [uid],
       lastMessage: '',
       messageTimeStamp: null,
-      docId:"",
-      sheetId: ""
+      docId:null,
+      sheetsId: null
     });
 
     const link = `/chat/${chatRef.id}`;

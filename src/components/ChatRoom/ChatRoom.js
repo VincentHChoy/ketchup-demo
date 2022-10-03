@@ -4,7 +4,8 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { HiOutlineMicrophone } from "react-icons/hi";
 import { AiFillDownCircle } from "react-icons/ai";
 import { useParams, useLocation } from "react-router-dom";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, getDoc } from "firebase/firestore";
+
 
 import ChatMessage from "../ChatMessage/ChatMessage";
 import Sidebar from "../Sidebar/Sidebar";
@@ -14,6 +15,7 @@ import "./ChatRoom.css";
 import { useSpeechToText } from "./useSpeechToText";
 import TextareaAutosize from "react-textarea-autosize";
 import { useSelector } from "react-redux";
+
 
 const dummyData = [
   {
@@ -40,7 +42,7 @@ const ChatRoom = () => {
   //ref point for scroll to bottom
   const dummy = useRef();
   const inputRef = useRef();
-  const location = useLocation()
+  const location = useLocation();
   const { chatId } = useParams();
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState(null);
@@ -65,7 +67,7 @@ const ChatRoom = () => {
           messages.push(doc.data());
         });
         setMessages(filterMessages(messages));
-        scrollToBottom()
+        scrollToBottom();
       });
 
     return unsub;
@@ -79,7 +81,24 @@ const ChatRoom = () => {
   }, [inputRef]);
 
   //add user on load
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const chatIdQuery = firestore.collection("chats").where("cid", "==", chatId);
+    const { uid } = auth.currentUser;
+    const chatQuery = chatIdQuery.get().then(async (querySnapshot) => {
+      const snapshot = querySnapshot.docs[0]; // use only the first document, but there could be more
+      const chatRef = snapshot.ref; // now you have a DocumentReference
+      const chatSnap = await getDoc(chatRef);
+      if (chatSnap.data().users.length < 2 && chatSnap.data().users[0] !== uid){
+        await setDoc(
+          chatRef,
+          {
+            users: [...chatSnap.data().users, uid]
+          },
+          { merge: true }
+        );
+      }
+    });
+  }, []);
 
   const filterMessages = (messages) => {
     return messages.filter((message) => {
@@ -123,7 +142,13 @@ const ChatRoom = () => {
       <main className={`chat ${chatResize}`}>
         <Sidebar />
         {messages &&
-          messages.map((msg, index) => <ChatMessage key={msg.id} previousMessage={messages[index - 1]} message={msg} />)}
+          messages.map((msg, index) => (
+            <ChatMessage
+              key={msg.id}
+              previousMessage={messages[index - 1]}
+              message={msg}
+            />
+          ))}
         <div ref={dummy}></div>
 
         <div
