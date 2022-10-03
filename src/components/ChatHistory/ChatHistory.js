@@ -104,6 +104,8 @@ function ChatHistory() {
                 lastMessage={chatroom.lastMessage}
                 chatter={chatroom.user.name}
                 img={chatroom.user.img}
+                docId={chatroom.docId}
+                sheetsId={chatroom.sheetsId}
               />
             ))}
         </main>

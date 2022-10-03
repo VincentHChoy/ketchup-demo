@@ -10,9 +10,10 @@ export const activeSheets = () => {
   }
 }
 
-export const cid = () => {
+export const setCID = (cid) => {
   return {
-    type: 'CID'
+    type: 'SET_CID',
+    payload: cid
   }
 }
 

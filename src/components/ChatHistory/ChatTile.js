@@ -1,11 +1,20 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setDocId, setSheetsId ,setCID } from "../../actions";
 
 function ChatTile(props) {
   const link = `/chat/${props.cid}`; 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   return (
       <main className="flex flex-row py-2 px-2 h-15 hover:bg-primary cursor-pointer"
-      onClick={() => { navigate(link)}}>
+      onClick={() => {
+        dispatch(setCID(props.cid))
+        dispatch(setDocId(props.docId))
+        dispatch(setSheetsId(props.sheetsId))
+        navigate(link)
+        }}>
         <img
           className="rounded-full w-16"
           referrerPolicy="no-referrer"
