@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+![logo](./public/logo-cropped.jpg)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Ketch Up!
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+a Real-time collabration app. You can create a channel for anything worth discussing, from team projects to company-wide initiatives. You can also make a google doc and sheet through the app with your partner!
 
-### `npm start`
+## Pages
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Home Page
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+user able to sign in with Google account and password
 
-### `npm test`
+![home](./screenshot/homePage.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Welcome Page
 
-### `npm run build`
+user will see their name and profile picture, and they can invite their partner with email.
+![welcome](./screenshot/welcomePage.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+email required validation
+![validation](./screenshot/emailValidation.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Chat Room
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+user can chat with partner in a specific chatroom
+![chat room](./screenshot/chatroom.png)
 
-### `npm run eject`
+messages will have updated timestamps. shows every 15 minutes
+![timestamps](./screenshot/time.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+user able to speech to text
+![speech to text](./screenshot/speechToText.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+user able to send multi-line messages, the button on the left able to scroll down the page
+![auto-input](./screenshot/multi_line-input.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Google Doc and Google Sheet
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+user able to create a new google doc or sheet
+![google doc](./screenshot/googleDoc.png)
+![google sheet](./screenshot/googleSheet.png)
 
-## Learn More
+user able to open a exiting google doc or sheet
+![google doc](./screenshot/doc.png)
+![google doc](./screenshot/sheet.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Side Bar
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+side bar will always visible on the left side of the page
+![side bar](./screenshot/SideBar.png)
 
-### Code Splitting
+user will able to access to chat ---- chat room list pop up window
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+user will able to access to google doc and google sheet page
 
-### Analyzing the Bundle Size
+user will able to log out
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Setup
 
-### Making a Progressive Web App
+Install dependencies with `npm install --force`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Running Webpack Development Server
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```sh
+npm start
+```
