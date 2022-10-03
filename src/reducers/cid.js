@@ -1,4 +1,4 @@
-const cidReducer = (state = '', action) => {
+const cidReducer = (state = null, action) => {
   switch (action.type) {
     case 'SET_CID':
       return action.payload;

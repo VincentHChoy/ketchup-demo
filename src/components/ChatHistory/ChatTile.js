@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setDocId, setSheetsId ,setCID } from "../../actions";
 
@@ -6,9 +6,12 @@ function ChatTile(props) {
   const link = `/chat/${props.cid}`; 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const cid = useSelector((state) => state.cid);
+  const messageClass = cid === props.cid ? "bg-primary" : "";
+
 
   return (
-      <main className="flex flex-row py-2 px-2 h-15 hover:bg-primary cursor-pointer"
+      <main className={`flex flex-row py-2 px-2 h-15 hover:bg-primary cursor-pointer ${messageClass}`}
       onClick={() => {
         dispatch(setCID(props.cid))
         dispatch(setDocId(props.docId))

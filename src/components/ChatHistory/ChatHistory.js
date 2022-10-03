@@ -11,7 +11,7 @@ function ChatHistory() {
   const chatVisible = useSelector((state) => state.toggleChat);
   const dispatch = useDispatch();
   const { uid } = auth.currentUser;
-  const [chatrooms, setChatrooms] = useState(null);
+  const [chatrooms, setChatrooms] = useState([]);
 
   // const chatrooms = [
   //   {
@@ -77,10 +77,14 @@ function ChatHistory() {
     return docSnap.data()
   };
 
+  const emptyChat = chatrooms.length < 1 ? true : false
+
+
 
   return (
     <>
       {chatVisible && (
+
         <main className="overflow-y-auto fixed bottom-5 top-5 right-5 m-0 flex flex-col bg-white text-secondary shadow-lg z-20 w-fit">
           <header className="flex flex-row justify-between items-center mx-2 my-2">
             <span className="font-bold text-xl text-center py-2 px-2">
@@ -96,7 +100,9 @@ function ChatHistory() {
               <AiOutlineCloseCircle size={28} />
             </button>
           </header>
-          {chatrooms && 
+          
+          {emptyChat ? <h1 className="text-ellipsis overflow-hidden">Currently no chats,<br/> Send an email link to start collaborating</h1> :
+          (chatrooms && 
             chatrooms.map((chatroom) => (
               <ChatTile
                 key={chatroom.user.uid}
@@ -107,9 +113,10 @@ function ChatHistory() {
                 docId={chatroom.docId}
                 sheetsId={chatroom.sheetsId}
               />
-            ))}
-        </main>
-      )}
+            )))}
+        </main>)
+
+      }
     </>
   );
 }
