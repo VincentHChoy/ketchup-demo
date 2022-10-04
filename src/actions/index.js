@@ -1,15 +1,3 @@
-export const activeDocs = () => {
-  return {
-    type: 'ACTIVE_DOC'
-  }
-}
-
-export const activeSheets = () => {
-  return {
-    type: 'ACTIVE_SHEET'
-  }
-}
-
 export const setCID = (cid) => {
   return {
     type: 'SET_CID',

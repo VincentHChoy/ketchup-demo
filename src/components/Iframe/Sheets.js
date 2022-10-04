@@ -9,7 +9,6 @@ import LogIn from "../Login/Login";
 import LogOut from "../Logout/Logout";
 
 function Docs(props) {
-  const activeSheet = useSelector((state) => state.isSheets);
   const isSheetsId = useSelector((state) => state.sheetsId);
   const cid = useSelector((state) => state.cid);
   const dispatch = useDispatch();
@@ -24,7 +23,6 @@ function Docs(props) {
       return res.json();
       })
       .then((val) => {
-        dispatch(activeSheets());
         dispatch(setSheetsId(val.spreadsheetId));
 
         //gets sheet Id
