@@ -6,7 +6,6 @@ import { AiFillDownCircle } from "react-icons/ai";
 import { useParams, useLocation } from "react-router-dom";
 import { collection, addDoc, setDoc, getDoc } from "firebase/firestore";
 
-
 import ChatMessage from "../ChatMessage/ChatMessage";
 import Sidebar from "../Sidebar/Sidebar";
 import Button from "../Button/Button";
@@ -16,7 +15,6 @@ import { useSpeechToText } from "./useSpeechToText";
 import TextareaAutosize from "react-textarea-autosize";
 import { useDispatch, useSelector } from "react-redux";
 import { setCID } from "../../actions";
-
 
 const dummyData = [
   {
@@ -47,8 +45,9 @@ const ChatRoom = () => {
   const { chatId } = useParams();
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState(null);
-  const dispatch = useDispatch()
-
+  const [chatRef, setChatRef] = useState(null);
+  const cid = useSelector((state) => state.cid);
+  const dispatch = useDispatch();
 
   const { startRecording, stopRecording, results, isRecording } =
     useSpeechToText();
@@ -86,26 +85,36 @@ const ChatRoom = () => {
   //add user on load
   useEffect(() => {
     //sets CID
-    dispatch(setCID(chatId))
+    console.log('hello');
+    dispatch(setCID(chatId));
 
     //adds user when they click onto the email link
-    const chatIdQuery = firestore.collection("chats").where("cid", "==", chatId);
+    const chatIdQuery = firestore
+      .collection("chats")
+      .where("cid", "==", chatId);
     const { uid } = auth.currentUser;
     const chatQuery = chatIdQuery.get().then(async (querySnapshot) => {
       const snapshot = querySnapshot.docs[0]; // use only the first document, but there could be more
       const chatRef = snapshot.ref; // now you have a DocumentReference
+      setChatRef(chatRef);
       const chatSnap = await getDoc(chatRef);
-      if (chatSnap.data().users.length < 2 && chatSnap.data().users[0] !== uid){
+      if (
+        chatSnap.data().users.length < 2 &&
+        chatSnap.data().users[0] !== uid
+      ) {
         await setDoc(
           chatRef,
           {
-            users: [...chatSnap.data().users, uid]
+            users: [...chatSnap.data().users, uid],
           },
           { merge: true }
         );
       }
     });
-  }, []);
+  }, [cid]);
+
+
+
 
   const filterMessages = (messages) => {
     return messages.filter((message) => {
@@ -133,6 +142,8 @@ const ChatRoom = () => {
     };
     try {
       await addDoc(messagesRef, messageData);
+      //adds last message to chat tile
+      await setDoc(chatRef, { lastMessage: messageData.text }, { merge: true });
     } catch (e) {
       setFormValue(value);
     }
@@ -144,11 +155,10 @@ const ChatRoom = () => {
   };
 
   const handleInputKeyup = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       sendMessage(e);
     }
-  }
-
+  };
 
   const chatVisible = useSelector((state) => state.toggleChat);
   const chatResize = chatVisible ? "w-2/3" : "";
@@ -192,7 +202,6 @@ const ChatRoom = () => {
               style={{ resize: "none" }}
               className="input-message"
               onKeyUp={handleInputKeyup}
-            
             />
 
             <button
@@ -211,7 +220,6 @@ const ChatRoom = () => {
               message={"Submit"}
               handleClick={sendMessage}
             />
-           
           </section>
         </div>
       </main>
