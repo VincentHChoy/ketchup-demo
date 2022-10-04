@@ -16,27 +16,6 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useDispatch, useSelector } from "react-redux";
 import { setCID } from "../../actions";
 
-const dummyData = [
-  {
-    text: "hello world",
-    createdAt: "september",
-    uid: "111111",
-    photoURL:
-      "https://www.savacations.com/wp-content/uploads/2021/02/Blog-Capybara-Pantanal-Brazil3.jpg",
-    displayName: "Capybara",
-    cid: "bbbg",
-  },
-  {
-    text: "hello world",
-    createdAt: "september",
-    uid: "mRtLOMQ8bGZcdbZFzC6phQi3n083",
-    photoURL:
-      "https://lh3.googleusercontent.com/a/AItbvmkIu-ES_oxt2wwInQNIKDWW1fZ62SuoPdSeHMgp=s96-c",
-    displayName: "Vincent",
-    cid: "bbbg",
-  },
-];
-
 const ChatRoom = () => {
   //ref point for scroll to bottom
   const dummy = useRef();
@@ -59,18 +38,20 @@ const ChatRoom = () => {
   }, [results]);
 
   useEffect(() => {
-    const unsub = firestore
+    const q = firestore
       .collection("message")
+      .where("cid", "<=", chatId)
+      .where("cid", ">=", chatId)
+      .orderBy("cid")
       .orderBy("createdAt")
-      .limit(10000)
-      .onSnapshot((snap) => {
-        let messages = [];
-        snap.forEach((doc) => {
-          messages.push(doc.data());
-        });
-        setMessages(filterMessages(messages));
-        scrollToBottom();
+      .limit(1000);
+    const unsub = q.onSnapshot((snap) => {
+      let messages = [];
+      snap.forEach((doc) => {
+        messages.push(doc.data());
       });
+      setMessages(messages);
+    });
 
     return unsub;
   }, [location]);
@@ -81,6 +62,8 @@ const ChatRoom = () => {
       inputRef.current.focus();
     }
   }, [inputRef]);
+
+  //set cid on load
   useEffect(() => {
     dispatch(setCID(chatId));
   }, []);
@@ -114,12 +97,6 @@ const ChatRoom = () => {
       }
     });
   }, [cid]);
-
-  const filterMessages = (messages) => {
-    return messages.filter((message) => {
-      return message.cid === chatId;
-    });
-  };
 
   const scrollToBottom = () => {
     dummy.current.scrollIntoView({ behavior: "smooth" });
