@@ -81,12 +81,14 @@ const ChatRoom = () => {
       inputRef.current.focus();
     }
   }, [inputRef]);
+  useEffect(() => {
+    dispatch(setCID(chatId));
+  }, []);
 
   //add user on load
   useEffect(() => {
     //sets CID
-    console.log('hello');
-    dispatch(setCID(chatId));
+    console.log("hello");
 
     //adds user when they click onto the email link
     const chatIdQuery = firestore
@@ -112,9 +114,6 @@ const ChatRoom = () => {
       }
     });
   }, [cid]);
-
-
-
 
   const filterMessages = (messages) => {
     return messages.filter((message) => {
