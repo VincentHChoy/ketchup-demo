@@ -30,17 +30,21 @@ function Sidebar(props) {
       {cid && (
         <>
           (
-          <Link to="/sheets">
-            <SideBarIcon
-              icon={<SiGooglesheets size={28} />}
-              text={"Google Sheets"}
-            ></SideBarIcon>
-          </Link>
           <Link to="/docs">
-            <SideBarIcon
-              icon={<SiReadthedocs size={28} />}
-              text={"Google Docs"}
-            ></SideBarIcon>
+            <div className={"animate-fade-in-down-1"}>
+              <SideBarIcon
+                icon={<SiReadthedocs size={28} />}
+                text={"Google Docs"}
+              ></SideBarIcon>
+            </div>
+          </Link>
+          <Link to="/sheets">
+            <div className={"animate-fade-in-down-2"}>
+              <SideBarIcon
+                icon={<SiGooglesheets size={28} />}
+                text={"Google Sheets"}
+              ></SideBarIcon>
+            </div>
           </Link>
           )
         </>

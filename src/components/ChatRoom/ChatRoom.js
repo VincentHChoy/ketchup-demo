@@ -14,7 +14,8 @@ import "./ChatRoom.css";
 
 import { useSpeechToText } from "./useSpeechToText";
 import TextareaAutosize from "react-textarea-autosize";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCID } from "../../actions";
 
 
 const dummyData = [
@@ -46,6 +47,8 @@ const ChatRoom = () => {
   const { chatId } = useParams();
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState(null);
+  const dispatch = useDispatch()
+
 
   const { startRecording, stopRecording, results, isRecording } =
     useSpeechToText();
@@ -82,6 +85,10 @@ const ChatRoom = () => {
 
   //add user on load
   useEffect(() => {
+    //sets CID
+    dispatch(setCID(chatId))
+
+    //adds user when they click onto the email link
     const chatIdQuery = firestore.collection("chats").where("cid", "==", chatId);
     const { uid } = auth.currentUser;
     const chatQuery = chatIdQuery.get().then(async (querySnapshot) => {
