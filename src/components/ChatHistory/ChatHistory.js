@@ -55,7 +55,7 @@ function ChatHistory() {
     <>
       {chatVisible && (
 
-        <main className="overflow-y-auto fixed bottom-5 top-5 right-5 m-0 flex flex-col bg-white text-secondary shadow-lg z-20 w-fit">
+        <main className="overflow-y-auto fixed bottom-5 top-5 right-5 m-0 flex flex-col bg-white text-secondary shadow-lg z-20 w-1/4">
           <header className="flex flex-row justify-between items-center mx-2 my-2">
             <span className="font-bold text-xl text-center py-2 px-2">
               Chats
