@@ -10,7 +10,6 @@ import LogOut from "../Logout/Logout";
 
 function Docs(props) {
   const cid = useSelector((state) => state.cid);
-  const activeDoc = useSelector((state) => state.isDoc);
   const isDocId = useSelector((state) => state.docId);
   const dispatch = useDispatch();
 
@@ -24,7 +23,6 @@ function Docs(props) {
         return res.json();
       })
       .then(async (val) => {
-        dispatch(activeDocs());
         dispatch(setDocId(val.documentId));
 
         //gets doc Id
