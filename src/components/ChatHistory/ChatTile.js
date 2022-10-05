@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setDocId, setSheetsId, setCID } from "../../actions";
-import { SiGooglesheets, SiGooglechat, SiReadthedocs } from "react-icons/si";
-
+import { SiGooglesheets, SiReadthedocs } from "react-icons/si";
 
 function ChatTile(props) {
   const link = `/chat/${props.cid}`;
@@ -10,16 +9,17 @@ function ChatTile(props) {
   const dispatch = useDispatch();
   const cid = useSelector((state) => state.cid);
   const selected = cid === props.cid ? "bg-primary" : "";
+  const focusChat = (destination) => {
+    dispatch(setCID(props.cid));
+    dispatch(setDocId(props.docId));
+    dispatch(setSheetsId(props.sheetsId));
+    navigate(destination);
+  };
 
   return (
     <main
-      className={`flex flex-row py-2 px-2 h-15 hover:bg-primary cursor-pointer ${selected}`}
-      onClick={() => {
-        dispatch(setCID(props.cid));
-        dispatch(setDocId(props.docId));
-        dispatch(setSheetsId(props.sheetsId));
-        navigate(link);
-      }}
+      className={`flex flex-row py-2 px-2 h-15 hover:bg-primary cursor-pointer relative ${selected}`}
+      onClick={()=>{focusChat(link)}}
     >
       <img
         className="rounded-full w-16"
@@ -34,9 +34,22 @@ function ChatTile(props) {
             {props.lastMessage}
           </p>
           <div className="flex flex-row">
-
-            {props.docId && <SiReadthedocs size={20} className={'text-blue-600'} />}
-            {props.sheetsId && <SiGooglesheets size={20} className={'text-green-600'} />}
+            {props.docId && (
+              <div 
+              className="animate-fade-in-down-1"
+                // onClick={() => { focusChat("/docs") }}
+                >
+                <SiReadthedocs size={20} className={"text-blue-600"} />
+              </div>
+            )}
+            {props.sheetsId && (
+              <div className="animate-fade-in-down-2" 
+              // onClick={() => { focusChat("/sheets") }}
+              >
+                <SiGooglesheets size={20} className={"text-green-600"} 
+                />
+              </div>
+            )}
           </div>
         </section>
       </div>

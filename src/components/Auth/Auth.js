@@ -7,12 +7,17 @@ import Sheets from "../Iframe/Sheets";
 
 function Auth(props) {
   const [signedIn, setSignedIn] = useState(false);
+  const [toggleInput, setToggleInput] = useState(false)
 
   const CLIENT_ID =
     "866320623023-g7mi0qumj5o3rjaedn9ciirsnft8n4eb.apps.googleusercontent.com";
   const API_KEY = process.env.REACT_APP_GOOGLE_KEY;
   const SCOPES = "https://www.googleapis.com/auth/drive";
 
+  const toggleInputBox = () =>{
+    console.log('toggle input box');
+    setToggleInput(!toggleInput)
+  }
 
   useEffect(() => {
     function start() {
@@ -41,12 +46,18 @@ function Auth(props) {
       {!signedIn && <LogIn />}
       {props.doc && 
       <Docs 
-      signedIn={signedIn}
-      route={props.route} />}
+        signedIn={signedIn}
+        route={props.route}
+        toggleInputBox={toggleInputBox}
+        inputState={toggleInput}
+        />}
       {props.sheet &&
         <Sheets
           signedIn={signedIn}
-          route={props.route} />}
+          route={props.route} 
+          toggleInputBox={toggleInputBox}
+          inputState={toggleInput}
+          />}
     </>
   );
 }
