@@ -4,7 +4,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { HiOutlineMicrophone } from "react-icons/hi";
 import { AiFillDownCircle } from "react-icons/ai";
 import { useParams, useLocation } from "react-router-dom";
-import { collection, addDoc, setDoc, getDoc } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, setDoc, getDoc, doc, getFirestore } from "firebase/firestore";
 
 import ChatMessage from "../ChatMessage/ChatMessage";
 import Sidebar from "../Sidebar/Sidebar";
@@ -15,6 +15,8 @@ import { useSpeechToText } from "./useSpeechToText";
 import TextareaAutosize from "react-textarea-autosize";
 import { useDispatch, useSelector } from "react-redux";
 import { setCID } from "../../actions";
+
+const TYPING_INDICATOR_MESSAGE = '123-ketchup-chat-indicator-123';
 
 const ChatRoom = () => {
   //ref point for scroll to bottom
@@ -27,6 +29,10 @@ const ChatRoom = () => {
   const [chatRef, setChatRef] = useState(null);
   const cid = useSelector((state) => state.cid);
   const dispatch = useDispatch();
+
+  const hasOwnTypingIndicator = React.useMemo(() => {
+    return messages?.some((message) => message.text === TYPING_INDICATOR_MESSAGE && message.uid === auth?.currentUser?.uid);
+  }, [messages])
 
   const { startRecording, stopRecording, results, isRecording } =
     useSpeechToText();
@@ -48,7 +54,7 @@ const ChatRoom = () => {
     const unsub = q.onSnapshot((snap) => {
       let messages = [];
       snap.forEach((doc) => {
-        messages.push(doc.data());
+        messages.push({ ...doc.data(), docID: doc.id });
       });
       setMessages(messages);
     });
@@ -66,13 +72,43 @@ const ChatRoom = () => {
   //set cid on load
   useEffect(() => {
     dispatch(setCID(chatId));
+    deleteTypingIndicator();
   }, []);
+
+  const pushTypingIndicator = async () => {
+    if (hasOwnTypingIndicator) return;
+    const { uid, photoURL, displayName } = auth.currentUser;
+    // Make sure we don't have double typing indicators
+    await deleteTypingIndicator();
+    const messageData = {
+      text: TYPING_INDICATOR_MESSAGE,
+      createdAt: firebase.firestore.Timestamp.now(),
+      uid,
+      photoURL,
+      displayName,
+      cid: chatId,
+    };
+    try {
+      await addDoc(messagesRef, messageData);      
+    } catch (e) {
+
+    }
+  }
+
+  const deleteTypingIndicator = async () => {
+    const { uid } = auth.currentUser;
+    const typingIndicatorMessages = messages?.filter((message) => {
+      return message.text === TYPING_INDICATOR_MESSAGE && message.uid === uid
+    })
+
+    typingIndicatorMessages?.forEach(({ docID }) => {
+      const docRef = doc(getFirestore(), "message", docID);
+      deleteDoc(docRef);
+    })
+  }
 
   //add user on load
   useEffect(() => {
-    //sets CID
-    console.log("hello");
-
     //adds user when they click onto the email link
     const chatIdQuery = firestore
       .collection("chats")
@@ -106,7 +142,6 @@ const ChatRoom = () => {
     const value = formValue;
     e.preventDefault();
     setFormValue("");
-
     const { uid, photoURL, displayName } = auth.currentUser;
     const messageData = {
       text: value,
@@ -123,14 +158,18 @@ const ChatRoom = () => {
     } catch (e) {
       setFormValue(value);
     }
-    setMessages([...messages, messageData]);
+    await deleteTypingIndicator();
 
+
+    setMessages([...messages, messageData]);
     setTimeout(() => {
       dummy.current.scrollIntoView({ behavior: "smooth" });
     }, 0);
   };
 
   const handleInputKeyup = (e) => {
+    pushTypingIndicator();
+
     if (e.key === "Enter" && !e.shiftKey) {
       sendMessage(e);
     }
@@ -140,18 +179,30 @@ const ChatRoom = () => {
   const chatResize = chatVisible ? "w-2/3" : "";
   const inputResize = chatVisible ? "w-4/6" : "";
 
+  const typingMessages = messages?.filter(({ text, uid }) => text === TYPING_INDICATOR_MESSAGE && uid !== auth?.currentUser?.uid ) || [];
+
   return (
     <main className="chatroom">
       <main className={`chat ${chatResize}`}>
         <Sidebar />
+       
         {messages &&
-          messages.map((msg, index) => (
+          messages.filter(({ text }) => text !== TYPING_INDICATOR_MESSAGE).map((msg, index) => (
             <ChatMessage
-              key={msg.id}
+              key={msg.docID}
               previousMessage={messages[index - 1]}
               message={msg}
             />
           ))}
+         {
+          typingMessages.map((msg, index) => 
+            <ChatMessage
+              key={msg.docID}
+              previousMessage={typingMessages[index - 1]}
+              message={{ ...msg, text: `${msg.displayName} typing...` }}
+            />
+        )
+        }
         <div ref={dummy}></div>
 
         <div
@@ -172,12 +223,16 @@ const ChatRoom = () => {
 
             <TextareaAutosize
               value={formValue}
-              onChange={(event) => setFormValue(event.target.value)}
+              onChange={(event) => {
+                setFormValue(event.target.value)
+              }}
               placeholder="ketchup message..."
               maxRows={5}
               style={{ resize: "none" }}
               className="input-message"
               onKeyUp={handleInputKeyup}
+              onFocus={pushTypingIndicator}
+              onBlur={deleteTypingIndicator}
             />
 
             <button
