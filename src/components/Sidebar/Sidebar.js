@@ -29,7 +29,6 @@ function Sidebar(props) {
 
       {cid && (
         <>
-          (
           <Link to="/docs">
             <div className={"animate-fade-in-down-1"}>
               <SideBarIcon
@@ -46,7 +45,6 @@ function Sidebar(props) {
               ></SideBarIcon>
             </div>
           </Link>
-          )
         </>
       )}
 
