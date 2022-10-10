@@ -10,7 +10,7 @@ function Auth(props) {
   const [toggleInput, setToggleInput] = useState(false)
 
   const CLIENT_ID =
-    "866320623023-g7mi0qumj5o3rjaedn9ciirsnft8n4eb.apps.googleusercontent.com";
+    "866320623023-drd2mfasp5obtv8get3nkhtl17gagnh2.apps.googleusercontent.com";
   const API_KEY = process.env.REACT_APP_GOOGLE_KEY;
   const SCOPES = "https://www.googleapis.com/auth/drive";
 
