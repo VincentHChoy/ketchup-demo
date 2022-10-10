@@ -42,7 +42,7 @@ function Home() {
     const link = `/chat/${chatRef.id}`;
     console.log(link);
     setChatLink(link);
-    // sendEmail(link);
+    sendEmail(link);
     navigate(link);
   };
 
