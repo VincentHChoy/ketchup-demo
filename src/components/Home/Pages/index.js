@@ -39,7 +39,7 @@ function Home() {
       sheetsId: null
     });
 
-    const link = `/chat/${chatRef.id}`;
+    const link = `https://ketch-up.netlify.app//chat/${chatRef.id}`;
     console.log(link);
     setChatLink(link);
     sendEmail(link);
@@ -56,7 +56,7 @@ function Home() {
         EMAIL_JS_TEMPLATE_ID,
         {
           name: displayName,
-          address: `http://localhost:3000/${link}`,
+          address: `https://ketch-up.netlify.app/chat/${link}`,
           user_email: email,
         },
         EMAIL_JS_PUBLIC_KEY
