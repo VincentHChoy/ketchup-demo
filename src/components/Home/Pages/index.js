@@ -39,7 +39,7 @@ function Home() {
       sheetsId: null
     });
 
-    const link = `https://ketch-up.netlify.app//chat/${chatRef.id}`;
+   const link = `/chat/${chatRef.id}`;
     console.log(link);
     setChatLink(link);
     sendEmail(link);
