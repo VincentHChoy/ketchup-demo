@@ -56,7 +56,7 @@ function Home() {
         EMAIL_JS_TEMPLATE_ID,
         {
           name: displayName,
-          address: `https://ketch-up.netlify.app/${link}`,
+          address: `https://ketch-up.netlify.app${link}`,
           user_email: email,
         },
         EMAIL_JS_PUBLIC_KEY
