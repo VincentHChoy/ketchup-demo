@@ -3,26 +3,12 @@ import { auth, firestore } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc, doc } from "firebase/firestore";
 import Button from "../../Button/Button";
-// import Typewriter from "../../Typewriter/Typewriter";
-
-const EMAIL_JS_SERVICE_ID = "service_z3ywa1s";
-const EMAIL_JS_TEMPLATE_ID = "template_ep7mphh";
-const EMAIL_JS_PUBLIC_KEY = "EKnx5SInPFQG3jWSG";
-
-const validateEmail = (email) => {
-  const res =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return res.test(String(email).toLowerCase());
-};
 
 const FALLBACK_PHOTO_URL =
   "https://4.bp.blogspot.com/-NiUcogaBYrk/UioQgTmkGuI/AAAAAAAAClg/YOdyn5RB4W4/s1600/minion_icon_image_picfishblogspotcom+%25287%2529.png";
 
 function Home() {
-  const [email, setEmail] = React.useState("");
-  const [chatLink, setChatLink] = React.useState("");
 
-  const isEmailValid = validateEmail(email) || email.length === 0;
 
   const { photoURL, displayName, uid } = auth.currentUser;
   const navigate = useNavigate();
@@ -40,29 +26,9 @@ function Home() {
     });
 
    const link = `/chat/${chatRef.id}`;
-    console.log(link);
-    setChatLink(link);
-    sendEmail(link);
     navigate(link);
   };
 
-  const sendEmail = (link) => {
-    if (!validateEmail(email)) {
-      alert("Email cannot be empty");
-    } else {
-      // eslint-disable-next-line no-undef
-      emailjs.send(
-        EMAIL_JS_SERVICE_ID,
-        EMAIL_JS_TEMPLATE_ID,
-        {
-          name: displayName,
-          address: `https://ketch-up.netlify.app${link}`,
-          user_email: email,
-        },
-        EMAIL_JS_PUBLIC_KEY
-      );
-    }
-  };
 
   return (
     <section className="flex flex-col justify-center items-center place-content-center space-y-5 mt-52">
@@ -92,23 +58,9 @@ function Home() {
       </span>
 
       <section className="flex flex-col content-center justify-center mt-24">
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-96 my-5 text-base text-black outline-none border-b-2 border-rgb(83, 82, 82)"
-          placeholder="type in your colleagues email to start collaborating"
-        />
-        {!isEmailValid && (
-          <div className="flex mb-2 font-sans text-sm font-bold">
-            Email Invalid
-          </div>
-        )}
         <Button
-          style={{
-            opacity: isEmailValid && email.length ? 1 : 0.5,
-            "pointer-events": isEmailValid && email.length ? "auto" : "none",
-          }}
           handleClick={createChat}
-          message={"Send"}
+          message={"Start Collaborating"}
         />
       </section>
     </section>
