@@ -5,18 +5,17 @@ import { setDoc } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import React, { useState } from "react";
 import Button from "../Button/Button";
-import LogIn from "../Login/Login";
-import LogOut from "../Logout/Logout";
-import { async } from "@firebase/util";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 function Docs(props) {
   const cid = useSelector((state) => state.cid);
   const isDocId = useSelector((state) => state.docId);
   const dispatch = useDispatch();
   const [link, setLink] = useState("");
+  const [demoAlert, setDemoAlert] = useState(false);
+  const docIdQuery = firestore.collection("chats").where("cid", "==", cid);
 
   const dbSetDocId = async (googleDocId) => {
-    const docIdQuery = firestore.collection("chats").where("cid", "==", cid);
     const docId = docIdQuery.get().then(async (querySnapshot) => {
       if (!querySnapshot.empty) {
         const snapshot = querySnapshot.docs[0]; // use only the first document, but there could be more
@@ -57,15 +56,34 @@ function Docs(props) {
     dbSetDocId(docId);
   };
 
+  const clearId = () => {
+    dispatch(setDocId(""));
+    dbSetDocId("");
+  };
+
   return (
     <>
       <main className="flex justify-center items-center">
         {props.signedIn && !isDocId && (
           <div className="h-72 flex flex-col justify-evenly items-center flex-1">
             <Button
-              handleClick={createFile}
+              handleClick={() => {
+                setDemoAlert(!demoAlert);
+              }}
               message={`Create new Google document`}
             />
+            {demoAlert && (
+              <p>
+                For demo purposes creating a document is not avaliable, click{" "}
+                <a
+                  className="text-blue-500"
+                  href="https://github.com/VincentHChoy/ketchup-demo"
+                >
+                  here
+                </a>{" "}
+                for more information
+              </p>
+            )}
             <Button
               handleClick={props.toggleInputBox}
               message={`Use exisiting Google document`}
@@ -83,15 +101,21 @@ function Docs(props) {
           </div>
         )}
       </main>
-      {props.signedIn && <LogOut />}
-      {!props.signedIn && <LogIn />}
       {isDocId && props.signedIn && (
-        <iframe
-          style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
-          className="googleweb"
-          src={`https://docs.google.com/document/d/${isDocId}/edit`}
-          title="Google Docs"
-        ></iframe>
+        <>
+          <button
+            onClick={clearId}
+            className="bg-secondary text-primary hover:bg-primary hover:text-secondary rounded-3xl fixed left-24 top-2"
+          >
+            <AiOutlineCloseCircle size={19} />
+          </button>
+          <iframe
+            style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
+            className="googleweb"
+            src={`https://docs.google.com/document/d/${isDocId}/edit`}
+            title="Google Docs"
+          ></iframe>
+        </>
       )}
     </>
   );

@@ -34,7 +34,7 @@ function Auth(props) {
     }
 
     gapi.load("client:auth2", start);
-  }, [signedIn]);
+}, [signedIn]);
 
   const checkSignedIn = () => {
     setSignedIn(gapi.auth2.getAuthInstance().isSignedIn.get());
@@ -42,8 +42,8 @@ function Auth(props) {
 
   return (
     <>
-      {signedIn && <LogOut />}
-      {!signedIn && <LogIn />}
+      {/* {signedIn && <LogOut />}
+      {!signedIn && <LogIn />} */}
       {props.doc && 
       <Docs 
         signedIn={signedIn}

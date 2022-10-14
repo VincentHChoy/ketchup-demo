@@ -5,20 +5,18 @@ import { setDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState } from "react";
 import Button from "../Button/Button";
-import LogIn from "../Login/Login";
-import LogOut from "../Logout/Logout";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
-function Docs(props) {
+function Sheets(props) {
   const isSheetsId = useSelector((state) => state.sheetsId);
   const cid = useSelector((state) => state.cid);
   const dispatch = useDispatch();
   const [link, setLink] = useState("");
+  const [demoAlert, setDemoAlert] = useState(false);
+  const sheetIdQuery = firestore.collection("chats").where("cid", "==", cid);
 
   const dbSetDocId = async (googleSheetId) => {
-    const docIdQuery = firestore
-      .collection("chats")
-      .where("cid", "==", cid);
-    const sheetId = docIdQuery.get().then(async (querySnapshot) => {
+    const sheetId = sheetIdQuery.get().then(async (querySnapshot) => {
       if (!querySnapshot.empty) {
         const snapshot = querySnapshot.docs[0]; // use only the first document, but there could be more
         const sheetsRef = snapshot.ref; // now you have a DocumentReference
@@ -50,12 +48,17 @@ function Docs(props) {
       });
   };
 
+  const clearId = () => {
+    dispatch(setSheetsId(''));
+    dbSetDocId('');
+  };
+
   const existingLink = (link) => {
     const sheetId = link
       .replace("https://docs.google.com/spreadsheets/d/", "")
       .replace("/edit#gid=0", "");
-    dispatch(dispatch(setSheetsId(sheetId)))
-    dbSetDocId(sheetId)
+    dispatch(setSheetsId(sheetId));
+    dbSetDocId(sheetId);
   };
 
   return (
@@ -64,9 +67,23 @@ function Docs(props) {
         {props.signedIn && !isSheetsId && (
           <div className="h-72 flex flex-col justify-evenly items-center">
             <Button
-              handleClick={createFile}
+              handleClick={() => {
+                setDemoAlert(!demoAlert);
+              }}
               message={`Create new Google sheet`}
             />
+            {demoAlert && (
+              <p>
+                For demo purposes creating a sheet is not avaliable, click{" "}
+                <a
+                  className="text-blue-500"
+                  href="https://github.com/VincentHChoy/ketchup-demo"
+                >
+                  here
+                </a>{" "}
+                for more information
+              </p>
+            )}
             <Button
               handleClick={props.toggleInputBox}
               message={`Use exisiting Google sheet`}
@@ -78,24 +95,38 @@ function Docs(props) {
                   placeholder="https://docs.google.com/spreadsheets/d/:sheetId/edit#gid=0"
                   onChange={(e) => setLink(e.target.value)}
                 />
-                <Button handleClick={existingLink(link)} message={"Set"} />
+                <Button
+                  handleClick={() => {
+                    existingLink(link);
+                  }}
+                  message={"Set"}
+                />
               </>
             )}
           </div>
         )}
       </main>
-      {props.signedIn && <LogOut />}
-      {!props.signedIn && <LogIn />}
+      {/* {props.signedIn && <LogOut />}
+      {!props.signedIn && <LogIn />} */}
       {isSheetsId && props.signedIn && (
-        <iframe
-          style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
-          className="googleweb"
-          src={`https://docs.google.com/spreadsheets/d/${isSheetsId}/edit`}
-          title="Google Sheets"
-        ></iframe>
+        <>
+          <button
+            onClick={clearId}
+            className="bg-secondary text-primary hover:bg-primary hover:text-secondary rounded-3xl fixed left-24 top-2"
+          >
+            <AiOutlineCloseCircle size={19} />
+          </button>
+
+          <iframe
+            style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
+            className="googleweb"
+            src={`https://docs.google.com/spreadsheets/d/${isSheetsId}/edit`}
+            title="Google Sheets"
+          ></iframe>
+        </>
       )}
     </>
   );
 }
 
-export default Docs;
+export default Sheets;
