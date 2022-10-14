@@ -1,7 +1,19 @@
 
-# Ketch Up!
+# Ketch Up Demo!
+
+## Demo Changes
+For demostration purposes the app was changed to demostrate how the app would function if the app would get verified by google. 
+
+Orginally the app would need access to the users entire google drive to create new sheets and docs.
+
+The demo also removes sending emails making it easier for users to start collaborating.
+
+Furthermore the UI for the chatroom has been revamped and tool tips have been added for icons that were previously absent.
+
 
 ## Introduction
+
+orginal Repo: https://github.com/VincentHChoy/ketchup
 
 Ketchup is a real-time chat work collabration app. 
 
