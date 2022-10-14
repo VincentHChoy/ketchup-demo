@@ -64,7 +64,7 @@ function Docs(props) {
   return (
     <>
       <main className="flex justify-center items-center">
-        {props.signedIn && !isDocId && (
+        {!isDocId && (
           <div className="h-72 flex flex-col justify-evenly items-center flex-1">
             <Button
               handleClick={() => {
@@ -101,7 +101,7 @@ function Docs(props) {
           </div>
         )}
       </main>
-      {isDocId && props.signedIn && (
+      {isDocId && (
         <>
           <button
             onClick={clearId}

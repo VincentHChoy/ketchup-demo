@@ -64,7 +64,7 @@ function Sheets(props) {
   return (
     <>
       <main className="flex justify-center items-center">
-        {props.signedIn && !isSheetsId && (
+        {!isSheetsId && (
           <div className="h-72 flex flex-col justify-evenly items-center">
             <Button
               handleClick={() => {
@@ -106,9 +106,7 @@ function Sheets(props) {
           </div>
         )}
       </main>
-      {/* {props.signedIn && <LogOut />}
-      {!props.signedIn && <LogIn />} */}
-      {isSheetsId && props.signedIn && (
+      {isSheetsId && (
         <>
           <button
             onClick={clearId}
