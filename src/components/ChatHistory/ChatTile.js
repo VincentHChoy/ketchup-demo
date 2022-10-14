@@ -29,12 +29,12 @@ function ChatTile(props) {
       <div className="flex flex-col mx-2 w-full">
         <h2 className="font-bold">{props.chatter}</h2>
         <section className="flex flex-row justify-between">
-          <p className="text-left px-1 py-1 mr-2 truncate text-sm max-w-xs">
+          <p className="text-left px-1 py-1 mr-2 truncate text-sm max-w-xs w-72">
             {" "}
             {props.lastMessage}
           </p>
           <div className="flex flex-row">
-            {props.docId && (
+            {props.docId && ( 
               <div 
               className="animate-fade-in-down-1"
                 // onClick={() => { focusChat("/docs") }}

@@ -1,22 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
 import { auth, firebase, firestore } from "../../firebase";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 import { HiOutlineMicrophone } from "react-icons/hi";
-import { AiFillDownCircle } from "react-icons/ai";
+import { AiFillDownCircle, AiOutlineShareAlt } from "react-icons/ai";
 import { useParams, useLocation } from "react-router-dom";
-import { collection, addDoc, deleteDoc, setDoc, getDoc, doc, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  setDoc,
+  getDoc,
+  doc,
+  getFirestore,
+} from "firebase/firestore";
 
+import "./ChatRoom.css";
 import ChatMessage from "../ChatMessage/ChatMessage";
 import Sidebar from "../Sidebar/Sidebar";
 import Button from "../Button/Button";
-import "./ChatRoom.css";
+import ChatIcon from "./ChatIcon";
 
 import { useSpeechToText } from "./useSpeechToText";
 import TextareaAutosize from "react-textarea-autosize";
 import { useDispatch, useSelector } from "react-redux";
 import { setCID } from "../../actions";
 
-const TYPING_INDICATOR_MESSAGE = '123-ketchup-chat-indicator-123';
+const TYPING_INDICATOR_MESSAGE = "123-ketchup-chat-indicator-123";
 
 const ChatRoom = () => {
   //ref point for scroll to bottom
@@ -31,8 +39,12 @@ const ChatRoom = () => {
   const dispatch = useDispatch();
 
   const hasOwnTypingIndicator = React.useMemo(() => {
-    return messages?.some((message) => message.text === TYPING_INDICATOR_MESSAGE && message.uid === auth?.currentUser?.uid);
-  }, [messages])
+    return messages?.some(
+      (message) =>
+        message.text === TYPING_INDICATOR_MESSAGE &&
+        message.uid === auth?.currentUser?.uid
+    );
+  }, [messages]);
 
   const { startRecording, stopRecording, results, isRecording } =
     useSpeechToText();
@@ -89,23 +101,21 @@ const ChatRoom = () => {
       cid: chatId,
     };
     try {
-      await addDoc(messagesRef, messageData);      
-    } catch (e) {
-
-    }
-  }
+      await addDoc(messagesRef, messageData);
+    } catch (e) {}
+  };
 
   const deleteTypingIndicator = async () => {
     const { uid } = auth.currentUser;
     const typingIndicatorMessages = messages?.filter((message) => {
-      return message.text === TYPING_INDICATOR_MESSAGE && message.uid === uid
-    })
+      return message.text === TYPING_INDICATOR_MESSAGE && message.uid === uid;
+    });
 
     typingIndicatorMessages?.forEach(({ docID }) => {
       const docRef = doc(getFirestore(), "message", docID);
       deleteDoc(docRef);
-    })
-  }
+    });
+  };
 
   //add user on load
   useEffect(() => {
@@ -160,7 +170,6 @@ const ChatRoom = () => {
     }
     await deleteTypingIndicator();
 
-
     setMessages([...messages, messageData]);
     setTimeout(() => {
       dummy.current.scrollIntoView({ behavior: "smooth" });
@@ -179,30 +188,34 @@ const ChatRoom = () => {
   const chatResize = chatVisible ? "w-2/3" : "";
   const inputResize = chatVisible ? "w-4/6" : "";
 
-  const typingMessages = messages?.filter(({ text, uid }) => text === TYPING_INDICATOR_MESSAGE && uid !== auth?.currentUser?.uid ) || [];
+  const typingMessages =
+    messages?.filter(
+      ({ text, uid }) =>
+        text === TYPING_INDICATOR_MESSAGE && uid !== auth?.currentUser?.uid
+    ) || [];
 
   return (
     <main className="chatroom">
       <main className={`chat ${chatResize}`}>
         <Sidebar />
-       
+
         {messages &&
-          messages.filter(({ text }) => text !== TYPING_INDICATOR_MESSAGE).map((msg, index) => (
-            <ChatMessage
-              key={msg.docID}
-              previousMessage={messages[index - 1]}
-              message={msg}
-            />
-          ))}
-         {
-          typingMessages.map((msg, index) => 
-            <ChatMessage
-              key={msg.docID}
-              previousMessage={typingMessages[index - 1]}
-              message={{ ...msg, text: `${msg.displayName} typing...` }}
-            />
-        )
-        }
+          messages
+            .filter(({ text }) => text !== TYPING_INDICATOR_MESSAGE)
+            .map((msg, index) => (
+              <ChatMessage
+                key={msg.docID}
+                previousMessage={messages[index - 1]}
+                message={msg}
+              />
+            ))}
+        {typingMessages.map((msg, index) => (
+          <ChatMessage
+            key={msg.docID}
+            previousMessage={typingMessages[index - 1]}
+            message={{ ...msg, text: `${msg.displayName} typing...` }}
+          />
+        ))}
         <div ref={dummy}></div>
 
         <div
@@ -214,17 +227,26 @@ const ChatRoom = () => {
           <section
             className={`flex content-center justify-center ${inputResize}`}
           >
-            <button
-              className="icon fixed left-40 bottom-5 animate-bounce"
-              onClick={scrollToBottom}
-            >
-              <AiFillDownCircle size={28} />
-            </button>
+            <ChatIcon
+              handleClick={scrollToBottom}
+              icon={<AiFillDownCircle size={28} />}
+              text={"Scroll to Bottom"}
+              position={'left-36'}
+            />
+
+            <ChatIcon
+              handleClick={() =>
+                {navigator.clipboard.writeText(window.location.href)}
+              }
+              icon={<AiOutlineShareAlt size={28} />}
+              text={"Copy to clipboard"}
+              position={'left-52'}
+            />
 
             <TextareaAutosize
               value={formValue}
               onChange={(event) => {
-                setFormValue(event.target.value)
+                setFormValue(event.target.value);
               }}
               placeholder="ketchup message..."
               maxRows={5}
