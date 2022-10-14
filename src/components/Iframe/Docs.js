@@ -77,7 +77,7 @@ function Docs(props) {
                 For demo purposes creating a document is not avaliable, click{" "}
                 <a
                   className="text-blue-500"
-                  href="https://github.com/VincentHChoy/ketchup-demo"
+                  href="https://github.com/VincentHChoy/ketchup-demo#demo-changes"
                 >
                   here
                 </a>{" "}

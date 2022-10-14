@@ -77,7 +77,7 @@ function Sheets(props) {
                 For demo purposes creating a sheet is not avaliable, click{" "}
                 <a
                   className="text-blue-500"
-                  href="https://github.com/VincentHChoy/ketchup-demo"
+                  href="https://github.com/VincentHChoy/ketchup-demo#demo-changes"
                 >
                   here
                 </a>{" "}
