@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleChat } from "../../actions";
 
-function Sidebar(props) {
+function Sidebar() {
   const cid = useSelector((state) => state.cid);
   const dispatch = useDispatch();
 
@@ -18,7 +18,7 @@ function Sidebar(props) {
         <img
           src="/logo-cropped.jpg"
           alt="logo"
-          className="py-5 mx-auto w-1/2 hover:animate-bounce cursor-pointer"
+          className="py-5 mx-auto w-1/2 hover:animate-bounce cursor-pointer hover:animate-ping"
         />
       </Link>
       <SideBarIcon
