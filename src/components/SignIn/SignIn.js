@@ -16,21 +16,25 @@ const SignIn = () => {
         name: displayName,
         chats: [""],
       };
+      console.log('uid',uid);
       try {
-        await setDoc(usersRef, userData, { merge: true });
-        const newUser = await checkNewUser(uid);
-        if (newUser) {
-         populateData(uid)
+        const user = await existingUser(uid);
+        console.log(user);
+        if (!user) {
+          console.log('im a new user');
+           populateData(uid)
         }
+        await setDoc(usersRef, userData, { merge: true });
       } catch (e) {
         alert(e);
       }
     });
   };
 
-  const checkNewUser = async (uid) => {
+  const existingUser = async (uid) => {
     const usersRef = doc(firestore, "users", uid);
     const docSnap = await getDoc(usersRef);
+    console.log(docSnap.exists());
     return docSnap.exists();
   };
 
