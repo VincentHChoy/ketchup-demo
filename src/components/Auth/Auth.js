@@ -15,7 +15,6 @@ function Auth(props) {
   const SCOPES = "https://www.googleapis.com/auth/drive";
 
   const toggleInputBox = () =>{
-    console.log('toggle input box');
     setToggleInput(!toggleInput)
   }
 

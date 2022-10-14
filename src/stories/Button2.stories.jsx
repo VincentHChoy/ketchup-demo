@@ -15,6 +15,5 @@ export const Primary = Template.bind({});
 Primary.args = {
   message: "Button",
   function: () => {
-    console.log("it works");
   },
 };

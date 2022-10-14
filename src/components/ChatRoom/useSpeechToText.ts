@@ -29,16 +29,14 @@ export const useSpeechToText = (): Results => {
   recognition.maxAlternatives = 1;
 
   const startRecording=()=>{
-    console.log('start recording');
     recognition.start();
     setIsRecording(true);
     setResults('');
     setError('');
-    console.log('Ready to receive a color command.');
+
 
     recognition.onresult = (event) => {
       const result = event.results[0][0].transcript;
-      console.log(result);
       setResults(result);
     }
 
@@ -47,7 +45,7 @@ export const useSpeechToText = (): Results => {
     }
   }
   const stopRecording=()=>{
-    console.log('stop recording');
+
     recognition.stop();
     setIsRecording(false);
   }
