@@ -35,6 +35,8 @@ const ChatRoom = () => {
   const [formValue, setFormValue] = useState("");
   const [messages, setMessages] = useState(null);
   const [chatRef, setChatRef] = useState(null);
+  const [copied, setCopied] = useState('Copy to Clipboard');
+
   const cid = useSelector((state) => state.cid);
   const dispatch = useDispatch();
 
@@ -231,16 +233,18 @@ const ChatRoom = () => {
               handleClick={scrollToBottom}
               icon={<AiFillDownCircle size={28} />}
               text={"Scroll to Bottom"}
-              position={'left-36'}
+              position={"left-36"}
             />
 
             <ChatIcon
-              handleClick={() =>
-                {navigator.clipboard.writeText(window.location.href)}
-              }
+              handleClick={() => {
+                navigator.clipboard.writeText(window.location.href)
+                setCopied('Copied to Clipboard');
+
+              }}
               icon={<AiOutlineShareAlt size={28} />}
-              text={"Copy to clipboard"}
-              position={'left-52'}
+              text={copied}
+              position={"left-52"}
             />
 
             <TextareaAutosize
@@ -256,14 +260,16 @@ const ChatRoom = () => {
               onFocus={pushTypingIndicator}
               onBlur={deleteTypingIndicator}
             />
-
+            
             <button
               onMouseDown={startRecording}
               onMouseUp={stopRecording}
-              style={{ opacity: isRecording ? 1 : 0.5 }}
-              className="mr-5 ml-5 text-red-500"
+              className="icon group bottom-5 mx-5"
             >
               <HiOutlineMicrophone size={28} />
+              <span className="icon-tooltip m-8 group-hover:scale-100">
+                {"Speech to text"}
+              </span>
             </button>
             <Button
               style={{

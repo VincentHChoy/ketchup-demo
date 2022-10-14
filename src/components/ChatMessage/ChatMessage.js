@@ -44,7 +44,7 @@ function ChatMessage(props) {
             "https://4.bp.blogspot.com/-NiUcogaBYrk/UioQgTmkGuI/AAAAAAAAClg/YOdyn5RB4W4/s1600/minion_icon_image_picfishblogspotcom+%25287%2529.png"
           }
         />
-        <p className="text-left"> {text}</p>
+        <p className="text-left">{text}</p>
       </div>
     </>
   );
