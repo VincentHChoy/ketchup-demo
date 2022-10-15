@@ -6,10 +6,11 @@ import SideBarIcon from "./SideBarIcon";
 import { auth } from "../../firebase";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleChat } from "../../actions";
+import { toggleChat, setGID } from "../../actions";
 
 function Sidebar() {
   const cid = useSelector((state) => state.cid);
+  const gid = useSelector((state) => state.gid);
   const dispatch = useDispatch();
 
   return (
@@ -52,7 +53,10 @@ function Sidebar() {
         <SideBarIcon
           icon={<GoSignOut size={28} />}
           text={"Sign Out"}
-          handleClick={() => auth.signOut()}
+          handleClick={() => {
+            auth.signOut()
+            dispatch(setGID(null))
+          }}
         ></SideBarIcon>
       </div>
     </div>
