@@ -36,6 +36,9 @@ const ChatRoom = () => {
   const [messages, setMessages] = useState(null);
   const [chatRef, setChatRef] = useState(null);
   const [copied, setCopied] = useState('Copy to Clipboard');
+  const gid = useSelector((state) => state.gid);
+  const { uid, photoURL, displayName } = auth.currentUser || { uid: gid, photoURL: "https://pbs.twimg.com/profile_images/3600372629/a82319a4ccf4843e777393d5b3954dce_400x400.jpeg",displayName:"Guest"};
+
 
   const cid = useSelector((state) => state.cid);
   const dispatch = useDispatch();
@@ -91,7 +94,6 @@ const ChatRoom = () => {
 
   const pushTypingIndicator = async () => {
     if (hasOwnTypingIndicator) return;
-    const { uid, photoURL, displayName } = auth.currentUser;
     // Make sure we don't have double typing indicators
     await deleteTypingIndicator();
     const messageData = {
@@ -108,7 +110,7 @@ const ChatRoom = () => {
   };
 
   const deleteTypingIndicator = async () => {
-    const { uid } = auth.currentUser;
+    const { uid } = auth.currentUser || {uid:gid};
     const typingIndicatorMessages = messages?.filter((message) => {
       return message.text === TYPING_INDICATOR_MESSAGE && message.uid === uid;
     });
@@ -125,7 +127,7 @@ const ChatRoom = () => {
     const chatIdQuery = firestore
       .collection("chats")
       .where("cid", "==", chatId);
-    const { uid } = auth.currentUser;
+    const { uid } = auth.currentUser || {uid:gid};
     const chatQuery = chatIdQuery.get().then(async (querySnapshot) => {
       const snapshot = querySnapshot.docs[0]; // use only the first document, but there could be more
       const chatRef = snapshot.ref; // now you have a DocumentReference
@@ -154,7 +156,6 @@ const ChatRoom = () => {
     const value = formValue;
     e.preventDefault();
     setFormValue("");
-    const { uid, photoURL, displayName } = auth.currentUser;
     const messageData = {
       text: value,
       createdAt: firebase.firestore.Timestamp.now(),

@@ -1,43 +1,50 @@
-import { auth } from '../../firebase'
+import { auth } from "../../firebase";
 import moment from "moment";
 import "./ChatMessage.css";
+import { useSelector } from "react-redux";
 
 const TIMESTAMP_COOLDOWN_IN_MINUTES = 15;
 
-
 function ChatMessage(props) {
-  const { text, uid, photoURL, createdAt } = props.message;
-
-  let previousCreatedAt = props.previousMessage ? props.previousMessage.createdAt : null;
-
-  const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
+  const { text, photoURL, createdAt, uid } = props.message;
+  const gid = useSelector((state) => state.gid);
+  console.log(uid);
+  let previousCreatedAt = props.previousMessage
+    ? props.previousMessage.createdAt
+    : null;
+  console.log(uid);
+  const sameUser = gid ? gid : auth.currentUser.uid
+  const messageClass =
+    uid === sameUser ? "sent" : "received";
 
   let showTimestamp = true;
 
   if (previousCreatedAt) {
     const start = moment(previousCreatedAt.toDate());
     const end = moment(createdAt.toDate());
-    
+
     let duration = moment.duration(end.diff(start));
     let minutes = duration.asMinutes();
 
     if (minutes < TIMESTAMP_COOLDOWN_IN_MINUTES) {
       showTimestamp = false;
     }
-
   }
-  
+
   const time = createdAt.toDate();
   const age = moment(time).fromNow();
 
   return (
     <>
-      {showTimestamp && <span className='time'>{age}</span>}
-      <div className={`message ${messageClass}`}  style={{
-                padding : "10px"
-              }}>
-        <img 
-          className='rounded-full w-10 mx-2'
+      {showTimestamp && <span className="time">{age}</span>}
+      <div
+        className={`message ${messageClass}`}
+        style={{
+          padding: "10px",
+        }}
+      >
+        <img
+          className="rounded-full w-10 mx-2"
           referrerPolicy="no-referrer"
           src={
             photoURL ||
@@ -49,6 +56,5 @@ function ChatMessage(props) {
     </>
   );
 }
-
 
 export default ChatMessage;

@@ -1,16 +1,17 @@
 import { doc, getDoc } from "firebase/firestore";
 import { auth, firestore } from "../../firebase";
-import ChatTile from "./ChatTile";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleChat } from "../../actions";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
+import ChatTile from "./ChatTile";
 
-function ChatHistory() {
+function ChatHistory(props) {
   const chatVisible = useSelector((state) => state.toggleChat);
+  const gid = useSelector((state) => state.gid);
   const dispatch = useDispatch();
-  const { uid } = auth.currentUser;
+  const { uid } = auth.currentUser || { uid: gid};
   const [chatrooms, setChatrooms] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -70,7 +71,7 @@ function ChatHistory() {
               <AiOutlineCloseCircle size={28} />
             </button>
           </header>
-          {loading && <Loading/>}
+          {loading && <Loading />}
           {!loading &&
             (emptyChat ? (
               <h1 className="text-ellipsis overflow-hidden px-2 mx-2">
