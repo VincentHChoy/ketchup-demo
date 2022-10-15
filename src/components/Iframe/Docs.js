@@ -1,5 +1,5 @@
 import { gapi } from "gapi-script";
-import { activeDocs, setDocId } from "../../actions";
+import { setDocId } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { setDoc } from "firebase/firestore";
 import { firestore } from "../../firebase";
@@ -14,6 +14,7 @@ function Docs(props) {
   const [link, setLink] = useState("");
   const [demoAlert, setDemoAlert] = useState(false);
   const docIdQuery = firestore.collection("chats").where("cid", "==", cid);
+  
 
   const dbSetDocId = async (googleDocId) => {
     const docId = docIdQuery.get().then(async (querySnapshot) => {
@@ -110,8 +111,8 @@ function Docs(props) {
             <AiOutlineCloseCircle size={19} />
           </button>
           <iframe
-            style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
-            className="googleweb"
+            // style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
+            className="googleweb ml-20 h-screen self-center w-11/12"
             src={`https://docs.google.com/document/d/${isDocId}/edit`}
             title="Google Docs"
           ></iframe>
