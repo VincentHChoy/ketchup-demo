@@ -3,14 +3,20 @@ import { auth, firestore } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc, doc } from "firebase/firestore";
 import Button from "../../Button/Button";
+import { useSelector } from "react-redux";
 
 const FALLBACK_PHOTO_URL =
   "https://4.bp.blogspot.com/-NiUcogaBYrk/UioQgTmkGuI/AAAAAAAAClg/YOdyn5RB4W4/s1600/minion_icon_image_picfishblogspotcom+%25287%2529.png";
 
-function Home() {
+function Home(props) {
+  const { photoURL, displayName, uid } = auth.currentUser || {
+    photoURL:
+      "https://pbs.twimg.com/profile_images/3600372629/a82319a4ccf4843e777393d5b3954dce_400x400.jpeg",
+    displayName: "Guest",
+    uid: props.uid,
+  };
+  const gid = useSelector((state) => state.gid);
 
-
-  const { photoURL, displayName, uid } = auth.currentUser;
   const navigate = useNavigate();
 
   const createChat = async () => {
@@ -19,16 +25,15 @@ function Home() {
     await addDoc(collection(firestore, "chats"), {
       cid: chatRef.id,
       users: [uid],
-      lastMessage: '',
+      lastMessage: "",
       messageTimeStamp: null,
-      docId:null,
-      sheetsId: null
+      docId: null,
+      sheetsId: null,
     });
 
-   const link = `/chat/${chatRef.id}`;
+    const link = `/chat/${chatRef.id}`;
     navigate(link);
   };
-
 
   return (
     <section className="flex flex-col justify-center items-center place-content-center space-y-5 mt-52">
@@ -58,11 +63,9 @@ function Home() {
       </span>
 
       <section className="flex flex-col content-center justify-center mt-24">
-        <Button
-          handleClick={createChat}
-          message={"Start Collaborating"}
-        />
+        <Button handleClick={createChat} message={"Start Collaborating"} />
       </section>
+        {gid && (<p className="text-secondary font-bold">Logging in as a guest is a one time instance, progress will be lost on close or refresh </p>)}
     </section>
   );
 }
