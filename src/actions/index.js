@@ -5,6 +5,13 @@ export const setCID = (cid) => {
   }
 }
 
+export const setGID = (gid) => {
+  return {
+    type: 'SET_GID',
+    payload: gid
+  }
+}
+
 export const toggleChat = () => {
   return {
     type: 'TOGGLE_CHAT'
