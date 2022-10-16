@@ -7,7 +7,7 @@ import { setGID } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const SignIn = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const gid = useSelector((state) => state.gid);
 
   const signInWithGoogle = () => {
@@ -34,18 +34,18 @@ const SignIn = () => {
   };
 
   const SignInWithGuest = async () => {
-    const uid = Date.now().toString()
-      const usersRef = doc(firestore, "users", uid);
-      const userData = {
-        uid,
-        img: "https://pbs.twimg.com/profile_images/3600372629/a82319a4ccf4843e777393d5b3954dce_400x400.jpeg",
-        name: "Guest",
-        chats: [""]
-      }
-      dispatch(setGID(uid));
-      await setDoc(usersRef, userData, { merge: true });
-      populateData(uid);
-  }
+    const uid = Date.now().toString();
+    const usersRef = doc(firestore, "users", uid);
+    const userData = {
+      uid,
+      img: "https://pbs.twimg.com/profile_images/3600372629/a82319a4ccf4843e777393d5b3954dce_400x400.jpeg",
+      name: "Guest",
+      chats: [""],
+    };
+    dispatch(setGID(uid));
+    await setDoc(usersRef, userData, { merge: true });
+    populateData(uid);
+  };
 
   const existingUser = async (uid) => {
     const usersRef = doc(firestore, "users", uid);
@@ -55,13 +55,21 @@ const SignIn = () => {
   };
 
   return (
-    <section className="grid h-screen place-items-center">
-      <div className="pb-30">
-        <img src="/logo.svg" alt="logo" className="logo" />
-      </div>
+    <section className="flex flex-col items-center justify-center h-screen">
+      <img src="/logo.png" alt="logo" className="logo" />
 
-      <Button message={"Sign in with Google"} handleClick={signInWithGoogle} />
-      <a className="text-secondary cursor-pointer" onClick={SignInWithGuest} >Sign in as Guest</a>
+      <div className="flex flex-col items-center justify-around">
+        <Button
+          message={"Sign in with Google"}
+          handleClick={signInWithGoogle}
+        />
+        <a
+          className="text-secondary cursor-pointer hover:underline my-5"
+          onClick={SignInWithGuest}
+        >
+          Sign in as Guest
+        </a>
+      </div>
     </section>
   );
 };
