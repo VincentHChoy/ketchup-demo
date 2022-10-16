@@ -116,8 +116,7 @@ function Sheets(props) {
           </button>
 
           <iframe
-            style={{ marginLeft: "80px", width: "100%", height: "100vh" }}
-            className="googleweb"
+            className="googleweb ml-20 h-screen self-center w-11/12"
             src={`https://docs.google.com/spreadsheets/d/${isSheetsId}/edit`}
             title="Google Sheets"
           ></iframe>
