@@ -9,13 +9,13 @@ const FALLBACK_PHOTO_URL =
   "https://4.bp.blogspot.com/-NiUcogaBYrk/UioQgTmkGuI/AAAAAAAAClg/YOdyn5RB4W4/s1600/minion_icon_image_picfishblogspotcom+%25287%2529.png";
 
 function Home(props) {
+  const gid = useSelector((state) => state.gid);
   const { photoURL, displayName, uid } = auth.currentUser || {
     photoURL:
       "https://pbs.twimg.com/profile_images/3600372629/a82319a4ccf4843e777393d5b3954dce_400x400.jpeg",
     displayName: "Guest",
-    uid: props.uid,
+    uid: gid,
   };
-  const gid = useSelector((state) => state.gid);
 
   const navigate = useNavigate();
 

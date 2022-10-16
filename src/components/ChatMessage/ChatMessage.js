@@ -8,11 +8,9 @@ const TIMESTAMP_COOLDOWN_IN_MINUTES = 15;
 function ChatMessage(props) {
   const { text, photoURL, createdAt, uid } = props.message;
   const gid = useSelector((state) => state.gid);
-  console.log(uid);
   let previousCreatedAt = props.previousMessage
     ? props.previousMessage.createdAt
     : null;
-  console.log(uid);
   const sameUser = gid ? gid : auth.currentUser.uid
   const messageClass =
     uid === sameUser ? "sent" : "received";
