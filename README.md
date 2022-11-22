@@ -1,8 +1,6 @@
 
 # Ketch Up Demo!
 
-See deployed app here: https://ketchup-demo.netlify.app/
-
 ## Demo Changes
 For demostration purposes the app was changed to demostrate how the app would function if the app would get verified by google. 
 
