@@ -55,9 +55,7 @@ const SignIn = () => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center h-screen">
-      <img src="/logo.png" alt="logo" className="logo" />
-
+    <section className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-around">
         <Button
           message={"Sign in with Google"}
