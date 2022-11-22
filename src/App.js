@@ -69,14 +69,14 @@ function App() {
                   </h1>
                 </section>
                 <section className={sectionStyle}>
-                  <div className="flex flex-row w-1/2">
+                    <h1 className="text-center text-4xl break-words text-primary">
+                      Collaborate with your peers using google docs and sheets all
+                      within the same app.
+                    </h1>
+                    <div className="flex flex-row w-1/2 mx-10">
                     <img className="rounded-2xl w-1/2 m-1" src="doc.png"></img>
                     <img className="rounded-2xl w-1/2 m-1" src="sheet.png"></img>
                   </div>
-                  <h1 className="text-center text-4xl break-words text-primary">
-                    Collaborate with your peers using google docs and sheets all
-                    within the same app
-                  </h1>
                 </section>
                 <section
                   className={`flex flex-col bg-primary rounded-xl md:flex-col ${sectionStyle}`}
