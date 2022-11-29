@@ -26,7 +26,7 @@ function App() {
             <main>
               <div className="h-screen bg-primary">
                 <a
-                    href="https://github.com/VincentHChoy/ketchup-demo"
+                  href="https://github.com/VincentHChoy/ketchup-demo"
                   target="_blank"
                 >
                   <AiFillGithub
@@ -47,9 +47,20 @@ function App() {
                 </main>
                 <AiFillDownCircle
                   size={50}
-                  className="text-secondary animate-bounce h-1/6 mx-auto"
+                  className="text-secondary hover:text-black cursor-pointer animate-bounce h-1/6 mx-auto"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document?.getElementById("next")?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                      inline: "nearest",
+                    });
+                  }}
                 />
-                <section className={`md:flex-row-reverse ${sectionStyle}`}>
+                <section
+                  id="next"
+                  className={`md:flex-row-reverse ${sectionStyle}`}
+                >
                   <img
                     className="md:w-1/2 rounded-2xl my-10"
                     src="welcomePage.png"
@@ -69,22 +80,25 @@ function App() {
                   </h1>
                 </section>
                 <section className={sectionStyle}>
-                    <h1 className="text-center text-4xl break-words text-primary">
-                      Collaborate with your peers using google docs and sheets all
-                      within the same app.
-                    </h1>
-                    <div className="flex flex-row w-1/2 mx-10">
+                  <h1 className="text-center text-4xl break-words text-primary">
+                    Collaborate with your peers using google docs and sheets all
+                    within the same app.
+                  </h1>
+                  <div className="flex flex-row w-1/2 mx-10">
                     <img className="rounded-2xl w-1/2 m-1" src="doc.png"></img>
-                    <img className="rounded-2xl w-1/2 m-1" src="sheet.png"></img>
+                    <img
+                      className="rounded-2xl w-1/2 m-1"
+                      src="sheet.png"
+                    ></img>
                   </div>
                 </section>
                 <section
                   className={`flex flex-col bg-primary rounded-xl md:flex-col ${sectionStyle}`}
                 >
                   <h1 className="text-center text-secondary text-4xl break-words py-10">
-                        Lets Get Collaborating!
+                    Lets Get Collaborating!
                   </h1>
-                      <SignIn />
+                  <SignIn />
                 </section>
               </div>
             </main>
